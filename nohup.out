@@ -1569,3 +1569,48 @@ Starting development server at http://0.0.0.0:8100/
 Quit the server with CONTROL-C.
 
 Watching for file changes with StatReloader
+[22/Jul/2023 01:05:22] "GET /admin/web/projectmodel/23/change/ HTTP/1.1" 200 21925
+[22/Jul/2023 01:05:23] "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+[22/Jul/2023 01:05:23] "GET /static/ckeditor/ckeditor/skins/moono/skin.js?t=N2M9 HTTP/1.1" 404 1883
+[22/Jul/2023 01:05:45] "GET /ckeditor/browse/?CKEditor=id_why&CKEditorFuncNum=3&langCode=zh-cn HTTP/1.1" 200 14822
+[22/Jul/2023 01:05:45] "GET /static/ckeditor/ckeditor_uploader/admin_base.css HTTP/1.1" 200 1429
+[22/Jul/2023 01:05:45] "GET /static/ckeditor/galleriffic/js/jquery.opacityrollover.js HTTP/1.1" 200 937
+[22/Jul/2023 01:05:45] "GET /static/ckeditor/galleriffic/js/jquery.galleriffic.js HTTP/1.1" 200 33266
+[22/Jul/2023 01:05:45] "GET /static/ckeditor/galleriffic/css/galleriffic-2.css HTTP/1.1" 200 3166
+[22/Jul/2023 01:05:45] "GET /static/ckeditor/galleriffic/js/jquery-1.3.2.js HTTP/1.1" 200 120619
+[22/Jul/2023 01:05:46] "GET /media/uploads/zhenda/2023/07/20/171339290_234591941789019_7955615567931651100_n.jpg HTTP/1.1" 200 60046
+[22/Jul/2023 01:05:47] "GET /static/ckeditor/galleriffic/css/basic.css HTTP/1.1" 200 1043
+[22/Jul/2023 01:05:47] "GET /media/uploads/zhenda/2023/07/22/camera_xhs_1689955809149ce2fe542-eaf4-3fb2-9759-0278064a1743_7o2qO1k.jpg HTTP/1.1" 200 648194
+[22/Jul/2023 01:05:48] "GET /static/ckeditor/galleriffic/css/loader.gif HTTP/1.1" 200 10453
+[22/Jul/2023 01:05:58] "GET /media/uploads/zhenda/2023/07/22/camera_xhs_1689955809149ce2fe542-eaf4-3fb2-9759-0278064a1743_oKMGk5e.jpg HTTP/1.1" 200 648194
+[22/Jul/2023 01:06:01] "GET /media/uploads/zhenda/2023/07/22/camera_xhs_1689955809149ce2fe542-eaf4-3fb2-9759-0278064a1743.jpg HTTP/1.1" 200 648194
+[22/Jul/2023 01:06:07] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637_ovdDe5w.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:06:08] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637_Atui9xN.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:06:17] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:08:03] "GET /ckeditor/browse/?CKEditor=id_how&CKEditorFuncNum=163&langCode=zh-cn HTTP/1.1" 200 14822
+[22/Jul/2023 01:08:26] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637_Atui9xN.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:08:28] "POST /admin/web/projectmodel/23/change/ HTTP/1.1" 302 0
+[22/Jul/2023 01:08:29] "GET /admin/web/projectmodel/ HTTP/1.1" 200 22637
+[22/Jul/2023 01:08:29] "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+[22/Jul/2023 01:09:34] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:09:40] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:09:47] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:09:56] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:10:05] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+[22/Jul/2023 01:10:09] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
+Not Found: /favicon.ico
+[22/Jul/2023 01:10:10] "GET /favicon.ico HTTP/1.1" 404 2574
+Not Found: /favicon.ico
+[22/Jul/2023 01:10:22] "GET /favicon.ico HTTP/1.1" 404 2574
+[22/Jul/2023 01:11:52] "GET /admin/web/projectmodel/23/change/ HTTP/1.1" 200 22158
+[22/Jul/2023 01:11:53] "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+[22/Jul/2023 01:11:53] "GET /static/ckeditor/ckeditor/skins/moono/skin.js?t=N2M9 HTTP/1.1" 404 1883
+Not Found: /media/uploads/zhenda/2023/07/22/2022-07-21-211637_Atui9xN.png
+[22/Jul/2023 01:11:54] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637_Atui9xN.png HTTP/1.1" 404 2971
+[22/Jul/2023 01:12:03] "GET /ckeditor/browse/?CKEditor=id_how&CKEditorFuncNum=163&langCode=zh-cn HTTP/1.1" 200 10466
+[22/Jul/2023 01:12:03] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 304 0
+[22/Jul/2023 01:12:03] "GET /media/uploads/zhenda/2023/07/22/camera_xhs_1689955809149ce2fe542-eaf4-3fb2-9759-0278064a1743.jpg HTTP/1.1" 304 0
+[22/Jul/2023 01:12:16] "POST /admin/web/projectmodel/23/change/ HTTP/1.1" 302 0
+[22/Jul/2023 01:12:17] "GET /admin/web/projectmodel/ HTTP/1.1" 200 22637
+[22/Jul/2023 01:12:17] "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+[22/Jul/2023 01:13:01] "GET /media/uploads/zhenda/2023/07/22/2022-07-21-211637.png HTTP/1.1" 200 2481813
