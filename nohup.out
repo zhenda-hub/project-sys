@@ -1559,3 +1559,13 @@ Not Found: /media/uploads/zhenda/2023/07/22/camera_xhs_1689955809149ce2fe542-eaf
 [22/Jul/2023 00:34:28] "GET /static/ckeditor/ckeditor/skins/moono/images/close.png HTTP/1.1" 200 468
 [22/Jul/2023 00:34:38] "GET /static/ckeditor/ckeditor/skins/moono/images/refresh.png HTTP/1.1" 200 422
 [22/Jul/2023 00:34:51] "GET /static/ckeditor/ckeditor/skins/moono/images/hidpi/close.png HTTP/1.1" 200 1271
+/www/wwwroot/project-management-system/project_sys/settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 21, 2023 - 01:48:59
+Django version 4.2.3, using settings 'project_sys.settings'
+Starting development server at http://0.0.0.0:8100/
+Quit the server with CONTROL-C.
+
+Watching for file changes with StatReloader
