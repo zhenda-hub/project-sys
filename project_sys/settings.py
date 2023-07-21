@@ -193,7 +193,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"  # 文件保存为止，因为上边配置了m
 CKEDITOR_RESTRICT_BY_USER = True  # 是否限制用户访问
 # CKEDITOR_JQUERY_URL = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'  # 使用jquery库
 # CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
-# CKEDITOR_IMAGE_BACKEND = 'pillow'  # 图片上传使用pillow插件
+CKEDITOR_IMAGE_BACKEND = 'pillow'  # 图片上传使用pillow插件
 
 CKEDITOR_CONFIGS = {
     'default': {
