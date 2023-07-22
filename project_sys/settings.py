@@ -202,6 +202,7 @@ CKEDITOR_CONFIGS = {
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
+        'toolbarLocation': 'bottom',  # set toolbar at bottom of window
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', 'Preview', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
@@ -230,6 +231,7 @@ CKEDITOR_CONFIGS = {
         ],
 
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+
         # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
         # 'height': 291,
         # 'width': '100%',
