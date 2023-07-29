@@ -17,6 +17,7 @@ def backup_db():
     create_dir('dbback')
     curtime = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
     cmd = f'/www/server/pyporject_evn/94d7bd8179533c59aca987c718472328_venv/bin/python3 manage.py dumpdata > dbback/db{curtime}.json --indent=4'
+    # cmd = f'python manage.py dumpdata > dbback/db{curtime}.json --indent=4'
 
     stdout, stderr = run_cmd2(cmd)
     print(stdout, stderr)
