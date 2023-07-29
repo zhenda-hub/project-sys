@@ -2,7 +2,7 @@
 
 env_bin=/www/server/pyporject_evn/bee2c6e1ee17c225fec353492bd9078b_venv/bin
 
-${env_bin}/pip install -r requirements.txt
+sudo ${env_bin}/pip install -r requirements.txt
 ${env_bin}/python3 manage.py makemigrations
 
 sudo chown ubuntu:ubuntu db.sqlite3
