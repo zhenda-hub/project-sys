@@ -77,7 +77,7 @@ class ProjectModel(BaseModel):
         now_calc = (now().date() - self.start_date).days
         end_calc = (self.end_date - self.start_date).days
         if not self.status:
-            return now_calc + 1
+            return max(0, now_calc + 1)
         else:
             return min(now_calc, end_calc) + 1
 
