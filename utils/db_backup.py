@@ -33,6 +33,6 @@ def print_hl():
 if __name__ == '__main__':
     file = backup_db()
     # add enctypt
-    encrypt('keys\pj_sys_2023-08-16-12-45-43.key', file)
+    encrypt('keys/pj_sys_2023-08-16-12-45-43.key', file)
     # print_hl()
 
