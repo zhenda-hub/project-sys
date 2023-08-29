@@ -43,7 +43,7 @@ class ProjectModel(BaseModel):
     name = models.CharField(verbose_name='项目名', max_length=30)
     what = models.TextField(verbose_name='项目描述')
     why = RichTextUploadingField(verbose_name='项目意义')
-    priority_choices = ((0, '低'), (1, '中'), (2, '高'))
+    priority_choices = ((0, '不重要不紧急'), (1, '不重要紧急'), (2, '重要不紧急'), (3, '重要紧急'))
     priority = models.IntegerField(verbose_name='优先级', default=0, choices=priority_choices)
 
     start_date = models.DateField(verbose_name='计划开始日期')
