@@ -27,5 +27,15 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('markdownx/', include('markdownx.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('vditor/', include('vditor.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 一定添加这个，否则无法显示图片
+]
+
+"""
+django提供静态服务，显示图片， 推荐debug模式
+生产环境应该collectstatic 配置为nginx提供静态服务！！
+"""
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
