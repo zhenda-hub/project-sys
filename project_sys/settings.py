@@ -131,8 +131,7 @@ TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
-# USE_TZ = True
-USE_TZ = False
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -186,7 +185,8 @@ MDEDITOR_CONFIGS = {
             "||", "preview", "watch", "fullscreen"
         ],  # custom edit box toolbar
         # 'upload_image_url': '/media/',
-        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
+        # image upload format type
+        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         'image_folder': 'editor',  # image save the folder name
         'theme': 'default',  # edit box theme, dark / default
         'preview_theme': 'default',  # Preview area theme, dark / default
@@ -196,7 +196,7 @@ MDEDITOR_CONFIGS = {
         'emoji': True,  # whether to open the expression function
         'tex': True,  # whether to open the tex chart function
         'flow_chart': True,  # whether to open the flow chart function
-        'sequence': True, # Whether to open the sequence diagram function
+        'sequence': True,  # Whether to open the sequence diagram function
         'watch': True,  # Live preview
         'lineWrapping': False,  # lineWrapping
         'lineNumbers': False,  # lineNumbers
@@ -222,8 +222,10 @@ CKEDITOR_CONFIGS = {
         'toolbarLocation': 'bottom',  # set toolbar at bottom of window
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', 'Preview', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
             '/',  # put this to force next toolbar on new line
@@ -290,19 +292,19 @@ CKEDITOR_CONFIGS = {
 # CKEDITOR_BROWSE_SHOW_DIRS = True  # 显示目录浏览
 # CKEDITOR_ALLOW_NONIMAGE_FILES = True
 
-VDITOR_CONFIGS = { # remember to write "' '"
-  'default':{
-      "width": "%90", # use numbers or percentages
-      "height": 360, # use numbers
-      "preview_theme": "light", # can fill in dark, light, wechat
-      "typewriterMode": "True", # whether to enable typewriter mode
-      "mode": "ir", # optional modes: sv, ir, wysiwyg
-      "debugger": "false", # whether to show log
-      "value": "", # editor initialization value
-      "theme": "classic", # can fill in classic, dark
-      "icon": "ant", # canfill in ant, material
-      "outline": "false", # show outline
-  }
+VDITOR_CONFIGS = {  # remember to write "' '"
+    'default': {
+        "width": "%90",  # use numbers or percentages
+        "height": 360,  # use numbers
+        "preview_theme": "light",  # can fill in dark, light, wechat
+        "typewriterMode": "True",  # whether to enable typewriter mode
+        "mode": "ir",  # optional modes: sv, ir, wysiwyg
+        "debugger": "false",  # whether to show log
+        "value": "",  # editor initialization value
+        "theme": "classic",  # can fill in classic, dark
+        "icon": "ant",  # canfill in ant, material
+        "outline": "false",  # show outline
+    }
 }
 
 # Default primary key field type
