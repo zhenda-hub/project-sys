@@ -51,6 +51,7 @@ class ProjectModel(BaseModel):
     why = RichTextUploadingField(verbose_name='项目意义')
     priority_choices = ((0, '不重要不紧急'), (1, '不重要紧急'), (2, '重要不紧急'), (3, '重要紧急'))
     priority = models.IntegerField(verbose_name='优先级', default=0, choices=priority_choices)
+    public = models.BooleanField(verbose_name='是否公开', default=False)
 
     start_date = models.DateField(verbose_name='计划开始日期')
     end_date = models.DateField(verbose_name='计划完成日期')
