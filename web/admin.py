@@ -11,10 +11,10 @@ admin.site.site_header = '项目管理系统'
 admin.site.index_title = '项目管理首页'
 
 
-@admin.register(ProjectModel)
+# @admin.register(ProjectModel)
 class ProjectModelAdmin(admin.ModelAdmin):
 # class ProjectModelAdmin(MarkdownxModelAdmin):
-    list_display = ['user', 'name', 'what',
+    list_display = ['name', 'user', 'what',
                     'priority', 'end_date', 'duration', 'status']
     list_filter = ['user', 'status', 'priority', 'end_date']
     search_fields = ['name', 'what', 'why', 'how', 'think']
@@ -54,3 +54,5 @@ class ProjectModelAdmin(admin.ModelAdmin):
 #     list_filter = ['status']
 #     search_fields = ['name', 'sub_step']
 #     ordering = ['name']
+
+admin.site.register(ProjectModel, ProjectModelAdmin)
