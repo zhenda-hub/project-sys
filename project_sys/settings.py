@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     'markdownx',
     'mdeditor',
+    'vditor',
 
     'web',
 ]
@@ -130,8 +131,7 @@ TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
-# USE_TZ = True
-USE_TZ = False
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -144,49 +144,66 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',
+    'markdown.extensions.toc',
     'markdown.extensions.nl2br',
     'markdown.extensions.codehilite',
 ]
+# MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {
+#     'extra': {
+#         'footnotes': {
+#             'UNIQUE_IDS': True
+#         },
+#         'fenced_code': {
+#             'lang_prefix': 'lang-'
+#         }
+#     },
+#     'toc': {
+#         'permalink': True
+#     }
+# }
 MARKDOWNX_MEDIA_PATH = 'markdownx/'
 MARKDOWNX_IMAGE_MAX_SIZE = {
     'size': (5000, 5000),
     'quality': 90
 }
 
-# X_FRAME_OPTIONS = 'SAMEORIGIN'
-# MDEDITOR_CONFIGS = {
-#     'default':{
-#         'width': '90% ',  # Custom edit box width
-#         'height': 500,  # Custom edit box height
-#         'toolbar': [
-#             "undo", "redo", "|",
-#             "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
-#             "h1", "h2", "h3", "h5", "h6", "|",
-#             "list-ul", "list-ol", "hr", "|",
-#             "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime",
-#             "emoji", "html-entities", "pagebreak", "goto-line", "|",
-#             "help", "info",
-#             "||", "preview", "watch", "fullscreen"
-#         ],  # custom edit box toolbar
-#         # 'upload_image_url': '/media/',
-#         'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
-#         'image_folder': 'editor',  # image save the folder name
-#         'theme': 'default',  # edit box theme, dark / default
-#         'preview_theme': 'default',  # Preview area theme, dark / default
-#         'editor_theme': 'default',  # edit area theme, pastel-on-dark / default
-#         'toolbar_autofixed': True,  # Whether the toolbar capitals
-#         'search_replace': True,  # Whether to open the search for replacement
-#         'emoji': True,  # whether to open the expression function
-#         'tex': True,  # whether to open the tex chart function
-#         'flow_chart': True,  # whether to open the flow chart function
-#         'sequence': True, # Whether to open the sequence diagram function
-#         'watch': True,  # Live preview
-#         'lineWrapping': False,  # lineWrapping
-#         'lineNumbers': False,  # lineNumbers
-#         'language': 'zh'  # zh / en / es
-#     }
-#
-# }
+# X_FRAME_OPTIONS = 'SAMEORIGIN'  # django3.0
+MDEDITOR_CONFIGS = {
+    'default': {
+        'width': '90% ',  # Custom edit box width
+        'height': 500,  # Custom edit box height
+        'toc': True,
+        'tocm': True,
+        'toolbar': [
+            "undo", "redo", "|",
+            "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
+            "h1", "h2", "h3", "h5", "h6", "|",
+            "list-ul", "list-ol", "hr", "|",
+            "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime",
+            "emoji", "html-entities", "pagebreak", "goto-line", "|",
+            "help", "info",
+            "||", "preview", "watch", "fullscreen"
+        ],  # custom edit box toolbar
+        # 'upload_image_url': '/media/',
+        # image upload format type
+        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        'image_folder': 'editor',  # image save the folder name
+        'theme': 'default',  # edit box theme, dark / default
+        'preview_theme': 'default',  # Preview area theme, dark / default
+        'editor_theme': 'default',  # edit area theme, pastel-on-dark / default
+        'toolbar_autofixed': True,  # Whether the toolbar capitals
+        'search_replace': True,  # Whether to open the search for replacement
+        'emoji': True,  # whether to open the expression function
+        'tex': True,  # whether to open the tex chart function
+        'flow_chart': True,  # whether to open the flow chart function
+        'sequence': True,  # Whether to open the sequence diagram function
+        'watch': True,  # Live preview
+        'lineWrapping': False,  # lineWrapping
+        'lineNumbers': False,  # lineNumbers
+        'language': 'zh'  # zh / en / es
+    }
+
+}
 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"  # 文件保存为止，因为上边配置了media， 图片将保存至media/uploads下
@@ -205,8 +222,10 @@ CKEDITOR_CONFIGS = {
         'toolbarLocation': 'bottom',  # set toolbar at bottom of window
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', 'Preview', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
             '/',  # put this to force next toolbar on new line
@@ -272,6 +291,21 @@ CKEDITOR_CONFIGS = {
 }
 # CKEDITOR_BROWSE_SHOW_DIRS = True  # 显示目录浏览
 # CKEDITOR_ALLOW_NONIMAGE_FILES = True
+
+VDITOR_CONFIGS = {  # remember to write "' '"
+    'default': {
+        "width": "%90",  # use numbers or percentages
+        "height": 360,  # use numbers
+        "preview_theme": "light",  # can fill in dark, light, wechat
+        "typewriterMode": "True",  # whether to enable typewriter mode
+        "mode": "ir",  # optional modes: sv, ir, wysiwyg
+        "debugger": "false",  # whether to show log
+        "value": "",  # editor initialization value
+        "theme": "classic",  # can fill in classic, dark
+        "icon": "ant",  # canfill in ant, material
+        "outline": "false",  # show outline
+    }
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

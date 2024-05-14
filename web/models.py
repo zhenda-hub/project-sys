@@ -7,10 +7,16 @@ from django.utils.timezone import now
 from django.urls import reverse
 
 from tinymce.models import HTMLField
-from markdownx.models import MarkdownxField
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from markdownx.models import MarkdownxField
 from mdeditor.fields import MDTextField
+
+# NOTE: monkeypatching for VditorTextField
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
+from vditor.fields import VditorTextField
 
 
 class BaseModel(models.Model):
@@ -45,6 +51,7 @@ class ProjectModel(BaseModel):
     why = RichTextUploadingField(verbose_name='项目意义')
     priority_choices = ((0, '不重要不紧急'), (1, '不重要紧急'), (2, '重要不紧急'), (3, '重要紧急'))
     priority = models.IntegerField(verbose_name='优先级', default=0, choices=priority_choices)
+    public = models.BooleanField(verbose_name='是否公开', default=False)
 
     start_date = models.DateField(verbose_name='计划开始日期')
     end_date = models.DateField(verbose_name='计划完成日期')
@@ -56,9 +63,12 @@ class ProjectModel(BaseModel):
     # how = models.TextField(verbose_name='执行步骤')
     # how = HTMLField(verbose_name='执行步骤')
     # how = RichTextField(verbose_name='执行步骤')
-    how = RichTextUploadingField(verbose_name='执行步骤', config_name='default')
+
+    # how = RichTextUploadingField(verbose_name='执行步骤', config_name='default')
+    how = MDTextField(verbose_name='执行步骤')
+
     # how = MarkdownxField(verbose_name='执行步骤')
-    # how = MDTextField(verbose_name='执行步骤')
+    # how = VditorTextField(verbose_name='执行步骤')
 
     attachments = models.FileField(verbose_name='附件', upload_to='attachments/%Y/%m/%d/', null=True, blank=True)
     status = models.BooleanField(verbose_name='是否完成', default=False)
