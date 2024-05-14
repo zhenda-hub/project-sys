@@ -67,8 +67,8 @@ class ProjectModel(BaseModel):
     # how = HTMLField(verbose_name='执行步骤')
     # how = RichTextField(verbose_name='执行步骤')
 
-    # how = RichTextUploadingField(verbose_name='执行步骤', config_name='default')
-    how = MDTextField(verbose_name='执行步骤')
+    how = RichTextUploadingField(verbose_name='执行步骤', config_name='default')
+    # how = MDTextField(verbose_name='执行步骤')
 
     # how = MarkdownxField(verbose_name='执行步骤')
     # how = VditorTextField(verbose_name='执行步骤')
