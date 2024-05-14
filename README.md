@@ -7,3 +7,5 @@ a web for pms
 - keys
 
 ## add signup!!
+
+## email debug
