@@ -43,7 +43,10 @@ class BaseModel(models.Model):
 
 
 class ProjectModel(BaseModel):
-    """项目"""
+    """
+    项目
+    :model:`auth.User`
+    """
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
 
     name = models.CharField(verbose_name='项目名', max_length=30)
@@ -83,6 +86,9 @@ class ProjectModel(BaseModel):
 
     @property
     def duration(self):
+        """
+        获得已经进行的天数
+        """
         # pdb.set_trace()
         now_calc = (now().date() - self.start_date).days
         end_calc = (self.end_date - self.start_date).days

@@ -37,6 +37,7 @@ CORS_ORIGIN_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -370,13 +371,26 @@ LOGGING = {
         },
     },
     'loggers': {
-        'note': {  # 定义自己的logger名
+        'django': {  # django本身的logger名
+            'handlers': ['console', 'default_time'],
+            'level': 'INFO',
+            'propagate': False,  # 向不向 父logger传递
+        },
+        'pj': {  # 定义自己的logger名
             'handlers': ['console', 'default_time'],
             'level': 'DEBUG',
-            'propagate': False,  # 向不向 父logger传递
+            'propagate': False,
         },
     }
 }
+
+# email setting
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = '1955093734@qq.com'
+EMAIL_HOST_PASSWORD = 'podveyszkonscaad'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 try:
     from .local_settings import *  # 最后导入本地配置
