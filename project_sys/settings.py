@@ -27,11 +27,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://134.175.124.152'
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://134.175.124.152',
     # 其他受信任的来源
 ]
 # Application definition
@@ -388,8 +386,8 @@ LOGGING = {
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 EMAIL_HOST = 'smtp.qq.com'
-EMAIL_HOST_USER = '1955093734@qq.com'
-EMAIL_HOST_PASSWORD = 'podveyszkonscaad'
+EMAIL_HOST_USER = 'xxxxxxxxx@qq.com'
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxx'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 try:
