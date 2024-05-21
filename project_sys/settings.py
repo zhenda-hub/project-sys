@@ -390,6 +390,8 @@ EMAIL_HOST_USER = 'xxxxxxxxx@qq.com'
 EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxx'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+LOGIN_URL = '/admin/login/'  # For PasswordResetCompleteView
+
 try:
     from .local_settings import *  # 最后导入本地配置
 except ImportError:
