@@ -1,0 +1,9 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block content %}
+{{ block.super }}
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+  <a href="{% url 'admin_signup' %}">{% translate 'Signup' %}</a>
+</div>
+{% endblock %}

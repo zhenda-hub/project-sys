@@ -18,9 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.conf import settings
 
-
-from . import settings
+from web.views import signup
 
 
 urlpatterns = [
@@ -54,6 +54,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path('admin/', admin.site.urls),
+    path('signup', signup, name='admin_signup'),  # 自定义admin的注册
 
     path('tinymce/', include('tinymce.urls')),
     path('markdownx/', include('markdownx.urls')),
