@@ -9,6 +9,7 @@ from .models import ProjectModel
 admin.site.site_title = '项目管理系统'
 admin.site.site_header = '项目管理系统'
 admin.site.index_title = '项目管理首页'
+admin.site.site_url = None  # 没有site
 
 
 # @admin.register(ProjectModel)

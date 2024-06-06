@@ -1,0 +1,51 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/signup.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} signup{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+  <form method="post" id="signup-form">{% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.email.errors }}
+      {{ form.email.label_tag }} {{ form.email }}
+    </div>
+    <div class="form-row">
+      {{ form.password1.errors }}
+      {{ form.password1.label_tag }} {{ form.password1 }}
+    </div>
+    <div class="form-row">
+      {{ form.password2.errors }}
+      {{ form.password2.label_tag }} {{ form.password2 }}
+    </div>
+
+    <div class="submit-row">
+      <input type="submit" value="注册">
+      <a href="{% url 'admin:login' %}" class="button" style="padding: 9px;">登录</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
