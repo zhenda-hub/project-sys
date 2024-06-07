@@ -145,6 +145,8 @@ STATIC_ROOT = BASE_DIR / 'collected_static'  # 生成环境 使用 collection
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+WEB_TITLE = '项目管理系统'
+
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',
     'markdown.extensions.toc',

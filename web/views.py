@@ -1,13 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
-
+from django.conf import settings
 from .form import AdminSignupForm
 
 
 def signup(request):
+    default_content = {
+        'site_header': settings.WEB_TITLE,
+        'site_title': settings.WEB_TITLE,
+        'subtitle': '注册',
+    }
     if request.method == "GET":
         return render(request, "admin/signup.html", {
             'form': AdminSignupForm(),
+            **default_content,
         })
     else:
         form = AdminSignupForm(request.POST)
@@ -24,4 +30,5 @@ def signup(request):
         else:
             return render(request, "admin/signup.html", {
                 'form': form,
+                **default_content,
             })
