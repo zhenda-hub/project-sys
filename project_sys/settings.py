@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'mdeditor',
     'vditor',
 
+    'import_export',
+    
     'web',
 ]
 

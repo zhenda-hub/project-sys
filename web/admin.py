@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.db.models import Q
 from markdownx.admin import MarkdownxModelAdmin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 from .models import ProjectModel
 
@@ -12,8 +14,15 @@ admin.site.index_title = '项目管理首页'
 admin.site.site_url = None  # 没有site
 
 
+class ProjectModelResource(resources.ModelResource):
+    class Meta:
+        model = ProjectModel
+
+
 # @admin.register(ProjectModel)
-class ProjectModelAdmin(admin.ModelAdmin):
+# class ProjectModelAdmin(admin.ModelAdmin):
+class ProjectModelAdmin(ImportExportModelAdmin):
+    resource_classes = [ProjectModelResource]
 # class ProjectModelAdmin(MarkdownxModelAdmin):
     list_display = ['name', 'user', 'what',
                     'priority', 'end_date', 'duration', 'status']
@@ -56,4 +65,6 @@ class ProjectModelAdmin(admin.ModelAdmin):
 #     search_fields = ['name', 'sub_step']
 #     ordering = ['name']
 
+
+# register
 admin.site.register(ProjectModel, ProjectModelAdmin)
