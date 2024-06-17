@@ -1,4 +1,5 @@
 import pdb
+import datetime
 
 from django.contrib.auth.models import User, AbstractUser
 from django.core.exceptions import ValidationError
@@ -98,3 +99,31 @@ class ProjectModel(BaseModel):
             return min(now_calc, end_calc) + 1
 
     duration.fget.short_description = '已进行天数'
+
+
+class Weekly(BaseModel):
+    """
+    周刊
+    :model:`auth.User`
+    """
+    date = models.DateField(verbose_name='创建日期', auto_now_add=True)
+    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
+    public = models.BooleanField(verbose_name='是否公开', default=False)
+
+    content = RichTextUploadingField(verbose_name='周刊内容', config_name='default')
+    # content = MDTextField(verbose_name='周刊内容')
+
+    attachments = models.FileField(verbose_name='附件', upload_to='attachments/%Y/%m/%d/', null=True, blank=True)
+
+    class Meta:
+        verbose_name = '周刊'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f'{self.date}-{self.user}'
+
+    @property
+    def time_left(self):
+        return f'{(datetime.date(1995+75, 3, 17) - self.date).days // 7}'
+
+    time_left.fget.short_description = '剩余星期'
