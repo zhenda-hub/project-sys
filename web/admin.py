@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.db.models import Q
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
+
 from markdownx.admin import MarkdownxModelAdmin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from .models import ProjectModel, Weekly
+from .models import ProjectModel, Weekly, UserForWeekly
 
 
 # 个性化设置
@@ -73,6 +76,21 @@ class WeeklyAdmin(MyMixin, ImportExportModelAdmin):
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
 
 
+class UserForWeeklyInline(admin.StackedInline):
+    model = UserForWeekly
+    can_delete = False
+    verbose_name_plural = "employee"
+
+
+# Define a new User admin
+class UserAdmin(BaseUserAdmin):
+    inlines = [UserForWeeklyInline]
+
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 # register
 admin.site.register(ProjectModel, ProjectModelAdmin)
 admin.site.register(Weekly, WeeklyAdmin)
+admin.site.register(UserForWeekly)

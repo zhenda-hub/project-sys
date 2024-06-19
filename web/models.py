@@ -1,7 +1,7 @@
 import pdb
 import datetime
 
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import now
@@ -120,10 +120,27 @@ class Weekly(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f'{self.date}-{self.user}'
+        return f'{self.user} {self.date}'
 
     @property
     def time_left(self):
-        return f'{(datetime.date(1995+75, 3, 17) - self.date).days // 7}'
+        try:
+            birthday = self.user.userforweekly.birthday
+        except:
+            return ''
+        memorial_day = birthday + datetime.timedelta(days=365) * 75
+        return f'{(memorial_day - self.date).days // 7}'
 
     time_left.fget.short_description = '剩余星期'
+
+
+class UserForWeekly(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    birthday = models.DateField(verbose_name='生日')
+
+    class Meta:
+        verbose_name = '周刊用户'
+        verbose_name_plural = verbose_name
+
+    def __str__(self) -> str:
+        return str(self.user)
