@@ -468,7 +468,7 @@ table thead th.sorted .sortoptions a.descending:hover {
 
 /* FORM DEFAULTS */
 
-input, textarea, select, .form-row p, form .button, a.button {
+input, textarea, select, .form-row p, form .button {
     margin: 2px 0;
     padding: 2px 3px;
     vertical-align: middle;
@@ -522,9 +522,10 @@ select[multiple] {
     transition: background 0.15s;
 }
 
-/* a.button {
-    padding: 4px 5px;
-} */
+a.button {
+    /* padding: 4px 5px; */
+    display: inline-block;
+}
 
 .button:active, input[type=submit]:active, input[type=button]:active,
 .button:focus, input[type=submit]:focus, input[type=button]:focus,
