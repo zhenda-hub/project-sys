@@ -2,8 +2,10 @@ asgiref==3.7.2
 backports.zoneinfo==0.2.1
 cffi==1.15.1
 cryptography==41.0.3
+diff-match-patch==20230430
 Django==4.2.3
 django-ckeditor==6.6.1
+django-import-export==4.0.7
 django-js-asset==2.1.0
 django-markdownx==4.0.2
 django-mdeditor==0.1.20
@@ -33,6 +35,7 @@ rope==1.7.0
 schedule==1.1.0
 snowballstemmer==2.2.0
 sqlparse==0.4.4
+tablib==3.5.0
 tomli==2.0.1
 typing_extensions==4.7.1
 tzdata==2023.3
