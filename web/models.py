@@ -106,7 +106,7 @@ class Weekly(BaseModel):
     周刊
     :model:`auth.User`
     """
-    date = models.DateField(verbose_name='创建日期', default=now().date, unique=True)
+    date = models.DateField(verbose_name='创建日期', default=datetime.date.today, unique=True)
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
     public = models.BooleanField(verbose_name='是否公开', default=False)
 
@@ -121,22 +121,25 @@ class Weekly(BaseModel):
 
     def __str__(self):
         return f'{self.user} {self.date}'
-
+    
     @property
     def time_left(self):
         try:
             birthday = self.user.userforweekly.birthday
+            life = self.user.userforweekly.life
         except:
             return ''
-        memorial_day = birthday + datetime.timedelta(days=365) * 75
-        return f'{(memorial_day - self.date).days // 7}'
+        memorial_day = birthday + datetime.timedelta(days=365) * life
+        total_days = (memorial_day - self.date).days
+        return f'星期: {total_days // 7}, 月: {total_days // 30}, 年: {total_days // 365}'
 
-    time_left.fget.short_description = '剩余星期'
+    time_left.fget.short_description = '剩余时间'
 
 
 class UserForWeekly(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthday = models.DateField(verbose_name='生日')
+    life = models.PositiveSmallIntegerField(verbose_name='预期寿命', default=75)
 
     class Meta:
         verbose_name = '周刊用户'

@@ -71,7 +71,7 @@ class WeeklyAdmin(MyMixin, ImportExportModelAdmin):
     list_display = ['date', 'user', 'time_left']
     list_filter = ['date', 'user']
     search_fields = ['date', 'user']
-    ordering = ['date']
+    ordering = ['-date']
 
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
 
