@@ -93,4 +93,4 @@ admin.site.register(User, UserAdmin)
 # register
 admin.site.register(ProjectModel, ProjectModelAdmin)
 admin.site.register(Weekly, WeeklyAdmin)
-admin.site.register(UserForWeekly)
+# admin.site.register(UserForWeekly)

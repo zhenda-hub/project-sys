@@ -106,7 +106,7 @@ class Weekly(BaseModel):
     周刊
     :model:`auth.User`
     """
-    date = models.DateField(verbose_name='创建日期', auto_now_add=True)
+    date = models.DateField(verbose_name='创建日期', default=now().date, unique=True)
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
     public = models.BooleanField(verbose_name='是否公开', default=False)
 
