@@ -43,6 +43,30 @@ class MyMixin():
         return obj.user == request.user
 
 
+class UserMixin():
+    def get_queryset(self, request):
+        # 用户只能查看自己的和公开的
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(username=request.user.username)
+
+    def has_change_permission(self, request, obj=None):
+        # 用户只能修改自己的，不能修改别人的
+        if obj is None:
+            return True
+        if request.user.is_superuser:
+            return True
+        return obj == request.user
+
+    def has_delete_permission(self, request, obj=None):
+        # 用户只能删除自己的，不能删除别人的
+        if obj is None:
+            return True
+        if request.user.is_superuser:
+            return True
+        return obj == request.user
+
 class ProjectModelResource(resources.ModelResource):
     class Meta:
         model = ProjectModel
@@ -83,7 +107,7 @@ class UserForWeeklyInline(admin.StackedInline):
 
 
 # Define a new User admin
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(UserMixin, BaseUserAdmin):
     inlines = [UserForWeeklyInline]
 
 
