@@ -43,13 +43,13 @@ class MyMixin():
         return obj.user == request.user
 
 
-class ProjectModelResource(MyMixin, resources.ModelResource):
+class ProjectModelResource(resources.ModelResource):
     class Meta:
         model = ProjectModel
 
 
 # @admin.register(ProjectModel)
-class ProjectModelAdmin(ImportExportModelAdmin):
+class ProjectModelAdmin(MyMixin, ImportExportModelAdmin):
 # class ProjectModelAdmin(MarkdownxModelAdmin):
     resource_classes = [ProjectModelResource]
     list_display = ['name', 'user', 'what',
