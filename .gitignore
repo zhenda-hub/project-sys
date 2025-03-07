@@ -160,6 +160,9 @@ cython_debug/
 .idea/
 .vscode/
 logs/
+
+
+collected_static/
 # save local
 media/
 keys/
