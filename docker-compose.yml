@@ -9,11 +9,16 @@ services:
       - ./:/app
       - static_volume:/app/static
       - media_volume:/app/media
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
     # environment:
       # - DJANGO_SETTINGS_MODULE=project_sys.settings
       # - DJANGO_DEBUG=1
     # command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
-    command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
+    command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
     # command: sh -c "tail -f /dev/null"  # 保持容器运行
 
 volumes:

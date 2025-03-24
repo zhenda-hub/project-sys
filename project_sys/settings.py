@@ -392,13 +392,13 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {  # django本身的logger名
-            'handlers': ['console', 'default_time'],
+        'django': {
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,  # 向不向 父logger传递
         },
-        'pj': {  # 定义自己的logger名
-            'handlers': ['console', 'default_time'],
+        'pj': {
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
