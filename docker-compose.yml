@@ -1,10 +1,21 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  projectsys:
-    image: projectsys
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  web:
+    build: .
     ports:
-      - 8200:8200
+      - "8200:8000"  # 直接暴露端口给外部访问
+    volumes:
+      - ./:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
+    # environment:
+      # - DJANGO_SETTINGS_MODULE=project_sys.settings
+      # - DJANGO_DEBUG=1
+    # command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
+    command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
+    # command: sh -c "tail -f /dev/null"  # 保持容器运行
+
+volumes:
+  static_volume:
+  media_volume:

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,11 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^d#t&84#_++lxf&f-db3%#ts5r!nj#9el%u*o*$ttk$&&%t-m='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+# DEBUG = os.getenv('DJANGO_DEBUG', False)
+DEBUG = False
+print("DEBUG:", DEBUG)
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
+    'http://*',
+    'https://*',
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -58,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,11 +143,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-STATIC_ROOT = BASE_DIR / 'collected_static'  # 生成环境 使用 collection
+STATIC_ROOT = BASE_DIR / 'collected_static'
+
+# 配置 WhiteNoise 用于生产环境静态文件服务
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# WhiteNoise配置
+WHITENOISE_MAX_AGE = 30*24*60*60  # 1 月的缓存
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'zip', 'gz', 'tgz', 'bz2', 'xz', 'br']
+# 跳过一些特定文件的处理
+# WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'admin/js/', 'ckeditor/', 'tinymce/']
+WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'ckeditor/', 'tinymce/']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
