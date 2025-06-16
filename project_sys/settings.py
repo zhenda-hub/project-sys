@@ -23,8 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^d#t&84#_++lxf&f-db3%#ts5r!nj#9el%u*o*$ttk$&&%t-m='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DJANGO_DEBUG', False)
-DEBUG = False
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 print("DEBUG:", DEBUG)
 ALLOWED_HOSTS = ['*']
 
@@ -39,6 +38,9 @@ CORS_ORIGIN_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    # 'simpleui',
+    # 'jazzmin',
+    
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -414,6 +416,7 @@ EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxx'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGIN_URL = '/admin/login/'  # For PasswordResetCompleteView
+
 
 try:
     from .local_settings import *  # 最后导入本地配置

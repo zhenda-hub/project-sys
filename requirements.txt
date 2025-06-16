@@ -6,15 +6,17 @@ diff-match-patch==20230430
 Django==4.2.3
 django-ckeditor==6.6.1
 django-import-export==4.0.7
+django-jazzmin==3.0.1
 django-js-asset==2.1.0
 django-markdownx==4.0.2
 django-mdeditor==0.1.20
+django-simpleui==2025.5.262
 django-tinymce==3.6.1
 django-vditor==1.1.1
 docstring-to-markdown==0.12
 docutils==0.20.1
 flake8==6.0.0
-whitenoise==6.6.0
+gunicorn==21.2.0
 importlib-metadata==6.8.0
 jedi==0.18.2
 Markdown==3.4.3
@@ -43,5 +45,5 @@ tzdata==2023.3
 ujson==5.7.0
 urequests==0.1.2
 whatthepatch==1.0.4
+whitenoise==6.6.0
 zipp==3.16.2
-gunicorn==21.2.0
