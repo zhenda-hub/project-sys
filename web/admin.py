@@ -7,7 +7,7 @@ from markdownx.admin import MarkdownxModelAdmin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from .models import ProjectModel, Weekly, UserForWeekly
+from .models import ProjectModel, Weekly, UserForWeekly, House, HouseItem
 
 
 # 个性化设置
@@ -52,13 +52,13 @@ class ProjectModelResource(resources.ModelResource):
 class ProjectModelAdmin(MyMixin, ImportExportModelAdmin):
 # class ProjectModelAdmin(MarkdownxModelAdmin):
     resource_classes = [ProjectModelResource]
-    list_display = ['name', 'user', 'what',
-                    'priority', 'end_date', 'duration', 'status']
+    list_display = ['name', 'user', 'what', 'priority', 'end_date', 'duration', 'status']
     list_filter = ['user', 'status', 'priority', 'end_date']
     search_fields = ['name', 'what', 'why', 'how', 'think']
     ordering = ['status', '-priority', 'end_date']
 
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
+    
     fieldsets = (
         ('基本信息', {
             'fields': ('name', 'user', 'what', 'status')
@@ -132,6 +132,43 @@ class UserForWeeklyInline(admin.StackedInline):
     verbose_name_plural = "employee"
 
 
+class HouseItemInline(admin.TabularInline):
+    model = HouseItem
+    extra = 1
+    fields = ('name', 'quantity', 'condition')
+    readonly_fields = ('created_at', 'updated_at')
+
+
+class HouseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address', 'area', 'status', 'monthly_expense', 'monthly_rent', 'description')
+    list_filter = ('status',)
+    search_fields = ('name', 'address')
+    inlines = [HouseItemInline] # 显示房屋物品的内联表单
+    
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('name', 'address', 'status')
+        }),
+        ('房屋详情', {
+            'fields': ('area', 'monthly_expense', 'monthly_rent', 'description')
+        }),
+    )
+
+
+class HouseItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'house', 'quantity', 'condition', 'price', 'description')
+    list_filter = ('condition', 'house')
+    search_fields = ('name', 'house__name')
+
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('name', 'house', 'quantity', 'condition',)
+        }),
+        ('详情', {
+            'fields': ('price', 'description')
+        }),
+    )
+
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [UserForWeeklyInline]
@@ -140,7 +177,12 @@ class UserAdmin(BaseUserAdmin):
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
 # register
 admin.site.register(ProjectModel, ProjectModelAdmin)
+
 admin.site.register(Weekly, WeeklyAdmin)
 admin.site.register(UserForWeekly, UserForWeeklyAdmin)
+
+admin.site.register(House, HouseAdmin)
+admin.site.register(HouseItem, HouseItemAdmin)

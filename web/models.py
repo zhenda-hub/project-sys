@@ -178,7 +178,7 @@ class HouseItem(BaseModel):
     """房屋物品模型"""
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='items', verbose_name="所属房屋")
     name = models.CharField(max_length=100, verbose_name="物品名称")
-    purchase_price = models.DecimalField('价格', max_digits=10, decimal_places=2)
+    price = models.DecimalField('价格', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1, verbose_name="数量")
     
     condition_choices = [
