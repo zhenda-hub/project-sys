@@ -151,13 +151,13 @@ class HouseAdmin(admin.ModelAdmin):
     search_fields = ('name', 'address')
     
     inlines = [HouseItemInline] # 显示房屋物品的内联表单
-    readonly_fields = ('monthly_income',)
+    # readonly_fields = ('monthly_income',)
     fieldsets = (
         ('基本信息', {
             'fields': ('name', 'address', 'status')
         }),
         ('房屋详情', {
-            'fields': ('area', 'monthly_income', 'monthly_expense', 'monthly_rent', 'description')
+            'fields': ('area', 'monthly_expense', 'monthly_rent', 'description')
         }),
     )
 
@@ -167,7 +167,7 @@ class HouseItemAdmin(admin.ModelAdmin):
     list_filter = ('condition', 'house')
     search_fields = ('name', 'house__name')
     
-    readonly_fields = ('total_price',)
+    # readonly_fields = ('total_price',)
     # fieldsets = (
     #     ('基本信息', {
     #         'fields': ('name', 'house', 'quantity', 'condition',)
