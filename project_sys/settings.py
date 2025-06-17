@@ -41,17 +41,19 @@ INSTALLED_APPS = [
     # 个性主题设置
     # 'simpleui',
     # 'jazzmin',
-    'django_daisy',
+    # 'django_daisy',
+    'admin_interface',
+    'colorfield',  # 用于颜色选择器
     
-    'django.contrib.admindocs',
-    'django.contrib.admin',
+    'django.contrib.admindocs', # 管理文档
+    'django.contrib.admin', 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django.contrib.humanize',
+    'django.contrib.humanize', # 人性化显示
     
     'ckeditor',
     'ckeditor_uploader',  # 带图片上传的ckeditor
