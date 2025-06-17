@@ -59,6 +59,16 @@ class ProjectModelAdmin(MyMixin, ImportExportModelAdmin):
     ordering = ['status', '-priority', 'end_date']
 
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('name', 'user', 'what', 'status')
+        }),
+        ('详情信息', {
+            'fields': ('why', 'priority', 'public',
+                       'start_date', 'end_date', 'how', 'attachments', 'think')
+        }),
+    )
+    
 
 
 class WeeklyResource(resources.ModelResource):
