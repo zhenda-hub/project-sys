@@ -38,8 +38,10 @@ CORS_ORIGIN_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    # 个性主题设置
     # 'simpleui',
     # 'jazzmin',
+    'django_daisy',
     
     'django.contrib.admindocs',
     'django.contrib.admin',
@@ -49,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.humanize',
+    
     'ckeditor',
     'ckeditor_uploader',  # 带图片上传的ckeditor
     'tinymce',
