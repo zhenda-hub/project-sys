@@ -42,7 +42,7 @@ class MyMixin():
 
         return obj.user == request.user
 
-
+"""===============================project================================="""
 class ProjectModelResource(resources.ModelResource):
     class Meta:
         model = ProjectModel
@@ -58,7 +58,6 @@ class ProjectModelAdmin(MyMixin, ImportExportModelAdmin):
     ordering = ['status', '-priority', 'end_date']
 
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
-    
     fieldsets = (
         ('基本信息', {
             'fields': ('name', 'user', 'what', 'status')
@@ -68,9 +67,8 @@ class ProjectModelAdmin(MyMixin, ImportExportModelAdmin):
                        'start_date', 'end_date', 'how', 'attachments', 'think')
         }),
     )
-    
 
-
+"""===============================weekly================================="""
 class WeeklyResource(resources.ModelResource):
     class Meta:
         model = Weekly
@@ -118,12 +116,11 @@ class UserForWeeklyMixin():
 
 class UserForWeeklyAdmin(UserForWeeklyMixin, ImportExportModelAdmin):
     resource_classes = [UserForWeeklyResource]
-    # list_display = ['date', 'user', 'time_left']
-    # list_filter = ['date', 'user']
-    # search_fields = ['date', 'user']
-    # ordering = ['-date']
+    list_display = ['user', 'birthday', 'life']
+    list_filter = ['user', 'life']
+    search_fields = ['user']
 
-    # readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
+    readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
 
 
 class UserForWeeklyInline(admin.StackedInline):
@@ -132,53 +129,65 @@ class UserForWeeklyInline(admin.StackedInline):
     verbose_name_plural = "employee"
 
 
-class HouseItemInline(admin.TabularInline):
-    model = HouseItem
-    extra = 1
-    fields = ('name', 'quantity', 'condition')
-    readonly_fields = ('created_at', 'updated_at')
-
-
-class HouseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address', 'area', 'status', 'monthly_expense', 'monthly_rent', 'description')
-    list_filter = ('status',)
-    search_fields = ('name', 'address')
-    inlines = [HouseItemInline] # 显示房屋物品的内联表单
-    
-    fieldsets = (
-        ('基本信息', {
-            'fields': ('name', 'address', 'status')
-        }),
-        ('房屋详情', {
-            'fields': ('area', 'monthly_expense', 'monthly_rent', 'description')
-        }),
-    )
-
-
-class HouseItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'house', 'quantity', 'condition', 'price', 'description')
-    list_filter = ('condition', 'house')
-    search_fields = ('name', 'house__name')
-
-    fieldsets = (
-        ('基本信息', {
-            'fields': ('name', 'house', 'quantity', 'condition',)
-        }),
-        ('详情', {
-            'fields': ('price', 'description')
-        }),
-    )
-
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [UserForWeeklyInline]
 
 
+
+
+"""===============================house================================="""
+
+class HouseItemInline(admin.TabularInline):
+    model = HouseItem
+    extra = 1
+    fields = ('name', 'price', 'quantity', 'condition')
+    # readonly_fields = ('created_at', 'updated_at')
+
+
+class HouseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address', 'status', 'monthly_income')
+    list_filter = ('status',)
+    search_fields = ('name', 'address')
+    
+    inlines = [HouseItemInline] # 显示房屋物品的内联表单
+    readonly_fields = ('monthly_income',)
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('name', 'address', 'status')
+        }),
+        ('房屋详情', {
+            'fields': ('area', 'monthly_income', 'monthly_expense', 'monthly_rent', 'description')
+        }),
+    )
+
+
+class HouseItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'house', 'quantity', 'condition', 'price', 'total_price', 'description')
+    list_filter = ('condition', 'house')
+    search_fields = ('name', 'house__name')
+    
+    readonly_fields = ('total_price',)
+    # fieldsets = (
+    #     ('基本信息', {
+    #         'fields': ('name', 'house', 'quantity', 'condition',)
+    #     }),
+    #     ('详情', {
+    #         'fields': ('price', 'description')
+    #     }),
+    # )
+    
+    
+    
+    
+    
+"""===============================register================================="""
+    
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-# register
+# Register your models here.
 admin.site.register(ProjectModel, ProjectModelAdmin)
 
 admin.site.register(Weekly, WeeklyAdmin)

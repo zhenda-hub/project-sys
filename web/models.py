@@ -163,7 +163,7 @@ class House(BaseModel):
     ]
     status = models.CharField(max_length=20, choices=status_choices,default='available', verbose_name="状态")
     monthly_expense = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="月支出")
-    monthly_rent = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="月租金", null=True, blank=True)
+    monthly_rent = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="月租金", default=0.00)
     description = models.TextField(blank=True, verbose_name="描述")
 
     def __str__(self):
@@ -177,6 +177,9 @@ class House(BaseModel):
     def monthly_income(self):
         """计算月净收入"""
         return self.monthly_rent - self.monthly_expense
+    
+    monthly_income.fget.short_description = '月净收入'
+
 
 class HouseItem(BaseModel):
     """房屋物品模型"""
@@ -203,3 +206,5 @@ class HouseItem(BaseModel):
     @property
     def total_price(self):
         return self.price * self.quantity
+
+    total_price.fget.short_description = '总价'
