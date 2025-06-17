@@ -136,7 +136,7 @@ class Weekly(BaseModel):
     time_left.fget.short_description = '剩余时间'
 
 
-class UserForWeekly(models.Model):
+class UserForWeekly(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthday = models.DateField(verbose_name='生日')
     life = models.PositiveSmallIntegerField(verbose_name='预期寿命', default=75)
@@ -172,13 +172,17 @@ class House(BaseModel):
     class Meta:
         verbose_name = "房屋"
         verbose_name_plural = "房屋管理"
-
+        
+    @property
+    def monthly_income(self):
+        """计算月净收入"""
+        return self.monthly_rent - self.monthly_expense
 
 class HouseItem(BaseModel):
     """房屋物品模型"""
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='items', verbose_name="所属房屋")
     name = models.CharField(max_length=100, verbose_name="物品名称")
-    price = models.DecimalField('价格', max_digits=10, decimal_places=2)
+    price = models.DecimalField('单价', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1, verbose_name="数量")
     
     condition_choices = [
@@ -195,3 +199,7 @@ class HouseItem(BaseModel):
     class Meta:
         verbose_name = "物品"
         verbose_name_plural = "物品管理"
+        
+    @property
+    def total_price(self):
+        return self.price * self.quantity
