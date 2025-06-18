@@ -39,11 +39,13 @@ CORS_ORIGIN_WHITELIST = [
 
 INSTALLED_APPS = [
     # 个性主题设置
-    # 'simpleui',
     # 'jazzmin',
+    # 'simpleui',
+    
     # 'django_daisy',
-    'admin_interface',
-    'colorfield',  # 用于颜色选择器
+    
+    # 'admin_interface',
+    # 'colorfield',  # 用于颜色选择器
     
     'django.contrib.admindocs', # 管理文档
     'django.contrib.admin', 
@@ -65,7 +67,7 @@ INSTALLED_APPS = [
 
     'import_export',
     
-    'web',
+    # 'web',
     'apps.core',
     'apps.projects',
     'apps.weekly',
