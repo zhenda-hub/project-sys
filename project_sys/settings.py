@@ -66,6 +66,10 @@ INSTALLED_APPS = [
     'import_export',
     
     'web',
+    'apps.core',
+    'apps.projects',
+    'apps.weekly',
+    'apps.house',
 ]
 
 MIDDLEWARE = [
