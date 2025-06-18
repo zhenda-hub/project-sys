@@ -23,8 +23,9 @@ class House(BaseModel):
         return f"{self.name} - {self.get_status_display()}"
 
     class Meta:
+        db_table = 'web_house'
         verbose_name = "房屋"
-        verbose_name_plural = "房屋管理"
+        verbose_name_plural = verbose_name
         
     @property
     def monthly_income(self):
@@ -53,12 +54,12 @@ class HouseItem(BaseModel):
         return f"{self.name} ({self.get_condition_display()})"
 
     class Meta:
+        db_table = 'web_houseitem'
         verbose_name = "物品"
-        verbose_name_plural = "物品管理"
+        verbose_name_plural = verbose_name
         
     @property
     def total_price(self):
         return self.price * self.quantity
 
     total_price.fget.short_description = '总价'
-        

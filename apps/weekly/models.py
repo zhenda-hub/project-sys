@@ -20,6 +20,7 @@ class Weekly(BaseModel):
     attachments = models.FileField(verbose_name='附件', upload_to='attachments/%Y/%m/%d/', null=True, blank=True)
 
     class Meta:
+        db_table = 'web_weekly'
         verbose_name = '周刊'
         verbose_name_plural = verbose_name
 
@@ -47,9 +48,9 @@ class UserForWeekly(BaseModel):
     life = models.PositiveSmallIntegerField(verbose_name='预期寿命', default=75)
 
     class Meta:
+        db_table = 'web_userforweekly'
         verbose_name = '周刊用户'
         verbose_name_plural = verbose_name
 
     def __str__(self) -> str:
         return str(self.user)
-

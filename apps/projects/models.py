@@ -53,6 +53,7 @@ class ProjectModel(BaseModel):
     think = models.TextField(verbose_name='项目感想', null=True, blank=True)
 
     class Meta:
+        db_table = 'web_projectmodel'
         verbose_name = '项目'
         verbose_name_plural = verbose_name
 
@@ -87,4 +88,3 @@ class ProjectModel(BaseModel):
 #
 #     def __str__(self):
 #         return self.name
-
