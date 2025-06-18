@@ -5,9 +5,9 @@ from django.db.models import Q
 
 
 # 个性化设置
-admin.site.site_title = '项目管理系统'
-admin.site.site_header = '项目管理系统'
-admin.site.index_title = '项目管理首页'
+admin.site.site_title = '管理系统平台'
+admin.site.site_header = '管理系统平台'
+admin.site.index_title = '管理平台首页'
 admin.site.site_url = None  # 没有site
 
 
