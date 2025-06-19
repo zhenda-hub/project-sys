@@ -17,6 +17,8 @@ services:
         max-file: "5"
     environment:
       - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       # - DJANGO_SETTINGS_MODULE=project_sys.settings
     command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
     # command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
