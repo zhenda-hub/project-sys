@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "8200:8000"  # 直接暴露端口给外部访问
+    user: "${UID}:${GID}"  # 使用非root用户运行容器, 防止权限问题
     volumes:
       - ./:/app
       - static_volume:/app/static
@@ -15,10 +16,10 @@ services:
         max-size: "10m"
         max-file: "5"
     environment:
-      - DJANGO_DEBUG=0
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
       # - DJANGO_SETTINGS_MODULE=project_sys.settings
-    # command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
-    command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
+    command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
+    # command: ["gunicorn", "project_sys.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
     # command: sh -c "tail -f /dev/null"  # 保持容器运行
 
 volumes:
