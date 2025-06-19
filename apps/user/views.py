@@ -19,7 +19,7 @@ def signup(request):
         form = AdminSignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_staff = True
+            user.is_staff = True # 允许用户登录后台
             user.save()
 
             # 给用户统一分配组
