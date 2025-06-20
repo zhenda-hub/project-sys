@@ -2,6 +2,8 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from .models import House, HouseItem
+from apps.core.admin import PublicMixin
+
 
 class HouseItemInline(admin.TabularInline):
     model = HouseItem
