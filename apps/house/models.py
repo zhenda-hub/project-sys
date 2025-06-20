@@ -1,14 +1,15 @@
 from django.db import models
 from apps.core.models import BaseModel
-
+from django.contrib.auth.models import User
 
 
 class House(BaseModel):
     """房屋模型"""
+    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name="房屋名称")
     address = models.TextField(verbose_name="地址")
     area = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="面积(m²)", null=True, blank=True)
-    
+    public = models.BooleanField(verbose_name='是否公开', default=False)
     status_choices = [
         ('available', '可租'),
         ('rented', '已租'),
@@ -41,6 +42,7 @@ class HouseItem(BaseModel):
     name = models.CharField(max_length=100, verbose_name="物品名称")
     price = models.DecimalField('单价', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1, verbose_name="数量")
+    public = models.BooleanField(verbose_name='是否公开', default=False)
     
     condition_choices = [
         ('good', '良好'),
