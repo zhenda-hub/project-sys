@@ -352,72 +352,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 创建log文件的文件夹
 LOG_PATH = BASE_DIR / "logs"
 LOG_PATH.mkdir(parents=True, exist_ok=True)
-# 配置日志
+
+# settings.py
 LOGGING = {
-    'version': 1,  # 保留字
-    'disable_existing_loggers': False,  # 禁用已经存在的logger实例
-    # 日志文件的格式
-    'formatters': {
-        # 详细的日志格式
-        'standard': {
-            'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d][%(levelname)s][%(message)s]'
-        },
-        # 简单的日志格式
-        'simple': {
-            'format': '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d] %(message)s',
-            # 'format': '[%(levelname)s][%(asctime)s][%(funcName)s:%(lineno)d] %(message)s',
-            # 'format': '[%(levelname)s][%(asctime)s][%(pathname)s:%(lineno)d] %(message)s',
-        },
-    },
-    # 过滤器
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    # 处理器
+    'version': 1,
     'handlers': {
-        'console': {     # 在终端打印
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],  # 只有在Django debug为True时才在屏幕打印日志
-            'class': 'logging.StreamHandler',  #
-            'formatter': 'simple',
-        },
-        'default': {    # 默认的
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
-            'filename': LOG_PATH / "all.log",  # 日志文件
-            'backupCount': 3,                                # 最多备份几个
-            'formatter': 'simple',
-            'encoding': 'utf-8',
-            'maxBytes': 1024 * 1024 * 5,                    # 日志大小 5M
-        },
-        'default_time': {
-            'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',  # 保存到文件，自动切
-            'filename': LOG_PATH / "all_time.log",  # 日志文件
-            'backupCount': 5,
-            'formatter': 'simple',
-            'encoding': 'utf-8',
-
-            'when': 'midnight',  # 每天切
-            'interval': 1,  # 每隔一天切
-            'delay': True,  # 延迟1秒，等待Django启动
-
+        'console': {
+            "level": "DEBUG",
+            'class': 'logging.StreamHandler',
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,  # 向不向 父logger传递
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
         },
-        'pj': {
+        'root': {
             'handlers': ['console'],
             'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
+        }
+    },
+    
 }
 
 # email setting

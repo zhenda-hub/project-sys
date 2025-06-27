@@ -5,6 +5,8 @@ from .models import House, HouseItem
 from apps.core.admin import DefaultMixin
 
 
+# TODO: user public
+
 class HouseItemInline(admin.TabularInline):
     model = HouseItem
     extra = 1

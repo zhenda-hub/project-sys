@@ -24,7 +24,10 @@ class DefaultMixin():
     2. 否则只能查看自己的
     """
     def save_model(self, request, obj, form, change):
-        obj.user = request.user  # 设置当前用户为创建者
+        # TODO: fix
+        breakpoint()
+        if not obj.user:
+            obj.user = request.user  # 设置当前用户为创建者
         # pdb.set_trace()
         super().save_model(request, obj, form, change)
 

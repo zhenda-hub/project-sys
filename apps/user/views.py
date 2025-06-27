@@ -1,10 +1,16 @@
+import logging
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+
 from .form import AdminSignupForm
+
+logger = logging.getLogger(__name__)
 
 
 def signup(request):
+    logger.info("日值呢 ??Admin signup view accessed.")
     default_content = {
         'site_header': settings.WEB_TITLE,
         'site_title': settings.WEB_TITLE,
