@@ -58,7 +58,7 @@ class ProjectModel(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.user}'
 
     @property
     def duration(self):

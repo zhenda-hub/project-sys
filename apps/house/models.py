@@ -21,7 +21,7 @@ class House(BaseModel):
     description = models.TextField(blank=True, verbose_name="描述")
 
     def __str__(self):
-        return f"{self.name} - {self.get_status_display()}"
+        return f"{self.name} - {self.user} - {self.get_status_display()}"
 
     class Meta:
         verbose_name = "房屋"
