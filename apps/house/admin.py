@@ -12,15 +12,15 @@ class HouseItemInline(admin.TabularInline):
 
 
 class HouseAdmin(DefaultMixin, ImportExportModelAdmin):
-    list_display = ('name', 'address', 'status', 'monthly_income')
-    list_filter = ('status',)
-    search_fields = ('name', 'address')
+    list_display = ('name', 'user', 'address', 'status', 'monthly_income')
+    list_filter = ('status', 'user')
+    search_fields = ('name', 'address', 'user')
     
     inlines = [HouseItemInline] # 显示房屋物品的内联表单
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
     fieldsets = (
         ('基本信息', {
-            'fields': ('name', 'address', 'status')
+            'fields': ('name', 'user', 'address', 'status')
         }),
         ('房屋详情', {
             'fields': ('public', 'area', 'monthly_expense', 'monthly_rent', 'description')
