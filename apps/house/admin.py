@@ -10,26 +10,45 @@ class HouseItemInline(admin.TabularInline):
     extra = 1
     fields = ('name', 'price', 'quantity', 'condition')
 
-class HouseAdmin(admin.ModelAdmin):
+
+class HouseAdmin(PublicMixin, ImportExportModelAdmin):
     list_display = ('name', 'address', 'status', 'monthly_income')
     list_filter = ('status',)
     search_fields = ('name', 'address')
     
     inlines = [HouseItemInline] # 显示房屋物品的内联表单
+    readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
     fieldsets = (
         ('基本信息', {
             'fields': ('name', 'address', 'status')
         }),
         ('房屋详情', {
-            'fields': ('area', 'monthly_expense', 'monthly_rent', 'description')
+            'fields': ('public', 'area', 'monthly_expense', 'monthly_rent', 'description')
         }),
     )
 
-class HouseItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'house', 'quantity', 'condition', 'price', 'total_price', 'description')
-    list_filter = ('condition', 'house')
-    search_fields = ('name', 'house__name')
 
+    def save_formset(self, request, form, formset, change):
+        """
+        重写 save_formset 方法，处理内联表单的保存逻辑
+        """
+        breakpoint()
+        if formset.model == HouseItem:
+            instances = formset.save(commit=False)
+            for instance in instances:
+                if not instance.user_id:
+                    instance.user = request.user
+                instance.save()
+            formset.save_m2m()
+        else:
+            super().save_formset(request, form, formset, change)
+
+class HouseItemAdmin(PublicMixin, ImportExportModelAdmin):
+    list_display = ('name', 'house', 'user', 'quantity', 'condition', 'price', 'total_price', 'description')
+    list_filter = ('condition', 'house', 'user')
+    search_fields = ('name', 'house__name', 'user')
+
+    readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
     # fieldsets = (
     #     ('基本信息', {
     #         'fields': ('name', 'house', 'quantity', 'condition',)
