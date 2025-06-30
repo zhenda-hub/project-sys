@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from apps.core.admin import PublicMixin, DefaultMixin
+from apps.core.admin import DefaultMixin
 from .models import Weekly, UserForWeekly
 
 
@@ -12,7 +12,7 @@ class WeeklyResource(resources.ModelResource):
     class Meta:
         model = Weekly
 
-class WeeklyAdmin(PublicMixin, ImportExportModelAdmin):
+class WeeklyAdmin(DefaultMixin, ImportExportModelAdmin):
     resource_classes = [WeeklyResource]
     list_display = ['date', 'user', 'time_left']
     list_filter = ['date', 'user']
@@ -20,8 +20,8 @@ class WeeklyAdmin(PublicMixin, ImportExportModelAdmin):
     ordering = ['-date']
     
     readonly_fields = ['user']  # 只读字段，不能编辑，编辑页自动隐藏
-
-
+    
+        
 """UserForWeeklyAdmin"""
 class UserForWeeklyResource(resources.ModelResource):
     class Meta:
