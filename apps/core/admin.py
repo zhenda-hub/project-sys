@@ -1,5 +1,10 @@
+from venv import logger
 from django.contrib import admin
 from django.db.models import Q
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Register your models here.
 
@@ -29,10 +34,16 @@ class DefaultMixin():
         if request.user.is_superuser:
             return qs
         cond = Q()
+        
+        logger.info(qs)
+        logger.info([i.public for i in qs])
+        print(qs)
+        print([i.public for i in qs])
+        
         if hasattr(self.model, 'public'):
             cond |= Q(public=True)
         if hasattr(self.model, 'user'):
-            cond |= Q(user=request.user)
+            cond |= Q(user=request.user) 
         return qs.filter(cond)
 
     def has_change_permission(self, request, obj=None):
