@@ -3,14 +3,14 @@ from django.db.models import Q
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from apps.core.admin import PublicMixin
+from apps.core.admin import DefaultMixin
 from .models import ProjectModel
 
 class ProjectModelResource(resources.ModelResource):
     class Meta:
         model = ProjectModel
 
-class ProjectModelAdmin(PublicMixin, ImportExportModelAdmin):
+class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
     resource_classes = [ProjectModelResource]
     list_display = ['name', 'user', 'what', 'priority', 'end_date', 'duration', 'status']
     list_filter = ['user', 'status', 'priority', 'end_date']

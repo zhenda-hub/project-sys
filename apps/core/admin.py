@@ -28,7 +28,12 @@ class DefaultMixin():
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(user=request.user)
+        cond = Q()
+        if hasattr(self.model, 'public'):
+            cond |= Q(public=True)
+        if hasattr(self.model, 'user'):
+            cond |= Q(user=request.user)
+        return qs.filter(cond)
 
     def has_change_permission(self, request, obj=None):
         """change view"""
@@ -47,12 +52,13 @@ class DefaultMixin():
         return obj.user == request.user
 
 
-class PublicMixin(DefaultMixin):
-    """有 public的admin mixin"""
+# class PublicMixin(DefaultMixin):
+#     """有 public的admin mixin"""
 
-    def get_queryset(self, request):
-        """list view"""
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(Q(user=request.user) | Q(public=True))
+#     def get_queryset(self, request):
+#         """list view"""
+#         qs = super().get_queryset(request)
+#         if request.user.is_superuser:
+#             return qs
+#         breakpoint()
+#         return qs.filter(Q(user=request.user) | Q(public=True))

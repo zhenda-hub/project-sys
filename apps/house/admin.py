@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from .models import House, HouseItem
-from apps.core.admin import PublicMixin
+from apps.core.admin import DefaultMixin
 
 
 class HouseItemInline(admin.TabularInline):
@@ -11,7 +11,7 @@ class HouseItemInline(admin.TabularInline):
     fields = ('name', 'price', 'quantity', 'condition')
 
 
-class HouseAdmin(PublicMixin, ImportExportModelAdmin):
+class HouseAdmin(DefaultMixin, ImportExportModelAdmin):
     list_display = ('name', 'address', 'status', 'monthly_income')
     list_filter = ('status',)
     search_fields = ('name', 'address')
@@ -32,7 +32,7 @@ class HouseAdmin(PublicMixin, ImportExportModelAdmin):
         """
         重写 save_formset 方法，处理内联表单的保存逻辑
         """
-        breakpoint()
+        # breakpoint()
         if formset.model == HouseItem:
             instances = formset.save(commit=False)
             for instance in instances:
@@ -43,7 +43,7 @@ class HouseAdmin(PublicMixin, ImportExportModelAdmin):
         else:
             super().save_formset(request, form, formset, change)
 
-class HouseItemAdmin(PublicMixin, ImportExportModelAdmin):
+class HouseItemAdmin(DefaultMixin, ImportExportModelAdmin):
     list_display = ('name', 'house', 'user', 'quantity', 'condition', 'price', 'total_price', 'description')
     list_filter = ('condition', 'house', 'user')
     search_fields = ('name', 'house__name', 'user')
