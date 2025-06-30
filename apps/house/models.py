@@ -1,5 +1,5 @@
 from django.db import models
-from apps.core.models import BaseModel
+from apps.core.models import BaseModel, UserBaseModel
 from django.contrib.auth.models import User
 
 
@@ -36,10 +36,10 @@ class House(BaseModel):
     monthly_income.fget.short_description = '月净收入'
 
 
-class HouseItem(BaseModel):
+class HouseItem(UserBaseModel):
     """房屋物品模型"""
-    # TODO: 为什么 有 user属性?
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='items', verbose_name="所属房屋")
+    
     name = models.CharField(max_length=100, verbose_name="物品名称")
     price = models.DecimalField('单价', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1, verbose_name="数量")
