@@ -24,8 +24,8 @@ class DefaultMixin():
     2. 否则只能查看自己的
     """
     def save_model(self, request, obj, form, change):
-        obj.user = request.user  # 设置当前用户为创建者
-        # pdb.set_trace()
+        if hasattr(self.model, 'user'):
+            obj.user = request.user  # 设置当前用户为创建者
         super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):
@@ -36,11 +36,14 @@ class DefaultMixin():
         cond = Q()
         
         logger.info(qs)
-        logger.info([i.public for i in qs])
         print(qs)
-        print([i.public for i in qs])
+        
         
         if hasattr(self.model, 'public'):
+            
+            logger.info([i.public for i in qs])
+            print([i.public for i in qs])
+            
             cond |= Q(public=True)
         if hasattr(self.model, 'user'):
             cond |= Q(user=request.user) 
