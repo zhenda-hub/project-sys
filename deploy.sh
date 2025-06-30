@@ -11,3 +11,7 @@ ${env_bin}/python3 manage.py migrate
 ${env_bin}/python3 manage.py collectstatic
 
 # nohup /www/server/pyporject_evn/bee2c6e1ee17c225fec353492bd9078b_venv/bin/python3 manage.py runserver 0.0.0.0:8200 &
+
+
+#  manage.py migrate  weekly 0002 --fake
+#  manage.py migrate projects 0002 --fake
