@@ -175,7 +175,7 @@ WHITENOISE_MAX_AGE = 30*24*60*60  # 1 月的缓存
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'zip', 'gz', 'tgz', 'bz2', 'xz', 'br']
 # 跳过一些特定文件的处理
 # WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'admin/js/', 'ckeditor/', 'tinymce/']
-WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'ckeditor/', 'tinymce/']
+WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'ckeditor/', 'tinymce/'] # TODO： check
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
