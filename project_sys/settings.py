@@ -243,7 +243,7 @@ MDEDITOR_CONFIGS = {
 }
 
 
-CKEDITOR_UPLOAD_PATH = "uploads/"  # 文件保存为止，因为上边配置了media， 图片将保存至media/uploads下
+CKEDITOR_UPLOAD_PATH = "uploads/"  # 文件保存位置，因为上边配置了media， 图片将保存至media/uploads下
 CKEDITOR_RESTRICT_BY_USER = True  # 是否限制用户访问
 # CKEDITOR_JQUERY_URL = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'  # 使用jquery库
 # CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
