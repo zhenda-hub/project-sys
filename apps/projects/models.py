@@ -25,8 +25,8 @@ class ProjectModel(BaseModel):
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
 
     name = models.CharField(verbose_name='项目名', max_length=30)
-    what = models.TextField(verbose_name='项目描述')
-    why = RichTextUploadingField(verbose_name='项目意义')
+    what = models.TextField(verbose_name='项目描述', blank=True, null=True)
+    why = RichTextUploadingField(verbose_name='项目意义', blank=True, null=True)
     priority_choices = ((0, '不重要不紧急'), (1, '不重要紧急'), (2, '重要不紧急'), (3, '重要紧急'))
     priority = models.IntegerField(verbose_name='优先级', default=0, choices=priority_choices)
     public = models.BooleanField(verbose_name='是否公开', default=False)
@@ -42,7 +42,7 @@ class ProjectModel(BaseModel):
     # how = HTMLField(verbose_name='执行步骤')
     # how = RichTextField(verbose_name='执行步骤')
 
-    how = RichTextUploadingField(verbose_name='执行步骤', config_name='default')
+    how = RichTextUploadingField(verbose_name='执行步骤', config_name='default', blank=True, null=True)
     # how = MDTextField(verbose_name='执行步骤')
 
     # how = MarkdownxField(verbose_name='执行步骤')
