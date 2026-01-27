@@ -1,0 +1,95 @@
+/* 甘特图容器 */
+.gantt-container {
+    margin: 20px 0;
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+/* 优先级颜色 - 对应艾森豪威尔矩阵 */
+.priority-critical { fill: #d32f2f !important; } /* 重要紧急 - 红色 */
+.priority-high { fill: #f57c00 !important; }     /* 重要不紧急 - 橙色 */
+.priority-medium { fill: #fbc02d !important; }   /* 不重要紧急 - 黄色 */
+.priority-low { fill: #388e3c !important; }      /* 不重要不紧急 - 绿色 */
+
+/* 过滤器 */
+.gantt-filters {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.gantt-filters label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* 图例 */
+.gantt-legend {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.gantt-legend h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.legend-color {
+    width: 30px;
+    height: 15px;
+    border-radius: 2px;
+}
+
+/* 弹出详情 */
+.details-container {
+    padding: 10px;
+    min-width: 200px;
+}
+
+.details-container h4 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.details-container p {
+    margin: 5px 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.details-container a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.details-container a:hover {
+    text-decoration: underline;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .gantt-filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

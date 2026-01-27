@@ -1,0 +1,141 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/gantt.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label='projects' %}">Projects</a>
+&rsaquo; <a href="{% url 'admin:projects_projectmodel_changelist' %}">项目</a>
+&rsaquo; {% translate '项目甘特图' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>项目甘特图</h2>
+
+        <!-- 过滤器 -->
+        <div class="gantt-filters">
+            <label><input type="checkbox" id="show-completed" checked> 显示已完成项目</label>
+            <label><input type="checkbox" id="show-only-mine"> 仅显示我的项目</label>
+            <button id="refresh-btn" class="button">刷新</button>
+        </div>
+
+        <!-- 甘特图容器 -->
+        <div class="gantt-container">
+            <div id="gantt_chart"></div>
+        </div>
+
+        <!-- 图例 -->
+        <div class="gantt-legend">
+            <h4>优先级图例</h4>
+            <div class="legend-item"><span class="legend-color priority-critical"></span><span>重要紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-high"></span><span>重要不紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-medium"></span><span>不重要紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-low"></span><span>不重要不紧急</span></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载 Google Charts
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // 原始数据
+    const rawData = [
+        {% for project in projects %}
+        {
+            id: '{{ project.id }}',
+            name: '{{ project.name|escapejs }}',
+            start: '{{ project.start_date|date:"Y-m-d" }}',
+            end: '{{ project.end_date|date:"Y-m-d" }}',
+            progress: {% if project.status %}100{% else %}0{% endif %},
+            priority: {{ project.priority }},
+            priorityLabel: '{% if project.priority == 3 %}重要紧急{% elif project.priority == 2 %}重要不紧急{% elif project.priority == 1 %}不重要紧急{% else %}不重要不紧急{% endif %}',
+            user: '{{ project.user.username|escapejs }}',
+            what: '{{ project.what|escapejs }}',
+            status: {{ project.status|yesno:"true,false" }}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    let chart;
+    let currentData = rawData;
+
+    function drawChart() {
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resource');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
+
+        const rows = currentData.map(p => [
+            String(p.id),
+            p.name,
+            p.priorityLabel,
+            new Date(p.start),
+            new Date(p.end),
+            null,
+            p.progress,
+            null
+        ]);
+
+        data.addRows(rows);
+
+        const options = {
+            height: 400,
+            gantt: {
+                trackHeight: 30
+            }
+        };
+
+        chart = new google.visualization.Gantt(document.getElementById('gantt_chart'));
+        chart.draw(data, options);
+    }
+
+    // 过滤功能
+    document.getElementById('show-completed').addEventListener('change', function() {
+        filterData();
+    });
+
+    document.getElementById('show-only-mine').addEventListener('change', function() {
+        filterData();
+    });
+
+    document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
+
+    function filterData() {
+        const showCompleted = document.getElementById('show-completed').checked;
+        const showOnlyMine = document.getElementById('show-only-mine').checked;
+        const currentUser = '{{ request.user.username }}';
+
+        currentData = rawData.filter(p => {
+            if (!showCompleted && p.status) return false;
+            if (showOnlyMine && p.user !== currentUser) return false;
+            return true;
+        });
+
+        drawChart();
+    }
+
+    // 窗口大小改变时重绘
+    window.addEventListener('resize', drawChart);
+});
+</script>
+{% endblock %}
