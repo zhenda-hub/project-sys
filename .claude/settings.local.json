@@ -6,7 +6,23 @@
       "Bash(docker build:*)",
       "Bash(docker run:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebSearch",
+      "Bash(python manage.py check:*)",
+      "Bash(python:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(sudo:*)",
+      "Bash(docker-compose:*)",
+      "Bash(docker compose:*)",
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "Bash(find:*)",
+      "Bash(pkill:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(xargs:*)"
     ]
   }
 }
