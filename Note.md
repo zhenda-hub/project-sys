@@ -93,3 +93,7 @@ class WeeklyResource(resources.ModelResource):
     def dehydrate_content(self, obj):
         return strip_tags(obj.content)
 ```
+
+
+gantt访问地址： http://localhost:8200/admin/projects/projectmodel/gantt/
+
