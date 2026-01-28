@@ -49,8 +49,8 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
                 Q(user=request.user) | Q(public=True)
             )
 
-        # 按持续时间排序（结束时间 - 开始时间），持续时间最长的在最上面
-        projects = sorted(projects, key=lambda p: (p.end_date - p.start_date).days, reverse=True)
+        # 按结束时间排序，结束日期越晚的排在最上面
+        projects = sorted(projects, key=lambda p: p.end_date, reverse=True)
 
         context = {
             **self.admin_site.each_context(request),
