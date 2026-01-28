@@ -43,11 +43,14 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
         """甘特图页面视图 - 复用 DefaultMixin 权限逻辑"""
         # 权限过滤：超级用户看全部，普通用户看自己的+公开的
         if request.user.is_superuser:
-            projects = ProjectModel.objects.all().order_by('end_date')
+            projects = ProjectModel.objects.all()
         else:
             projects = ProjectModel.objects.filter(
                 Q(user=request.user) | Q(public=True)
-            ).order_by('end_date')
+            )
+
+        # 按持续时间排序（结束时间 - 开始时间），持续时间最长的在最上面
+        projects = sorted(projects, key=lambda p: (p.end_date - p.start_date).days, reverse=True)
 
         context = {
             **self.admin_site.each_context(request),
