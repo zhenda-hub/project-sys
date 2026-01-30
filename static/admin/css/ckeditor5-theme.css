@@ -1,0 +1,42 @@
+/* CKEditor 5 跟随 Django Admin 主题 */
+
+/* 当 Admin 是 dark 主题时 */
+html[data-theme="dark"] .ck-editor {
+    --ck-color-base-background: #1e1e1e;
+    --ck-color-base-border: #3a3a3a;
+    --ck-color-text: #e0e0e0;
+    --ck-color-base-foreground: #2d2d2d;
+    --ck-color-toolbar-background: #252525;
+    --ck-color-editor-background: #1e1e1e;
+    --ck-color-button-default-background: #3a3a3a;
+    --ck-color-button-default-hover-background: #4a4a4a;
+    --ck-color-button-on-background: #264b5d;
+    --ck-color-list-background: #2d2d2d;
+    --ck-color-panel-background: #2d2d2d;
+    --ck-color-input-background: #2d2d2d;
+    --ck-color-input-border: #3a3a3a;
+}
+
+/* 当 Admin 是 light 主题时（使用默认值，可省略） */
+html[data-theme="light"] .ck-editor {
+    /* CKEditor 5 默认就是 light 主题，无需额外配置 */
+}
+
+/* Auto 模式 - 跟随系统 */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .ck-editor {
+        --ck-color-base-background: #1e1e1e;
+        --ck-color-base-border: #3a3a3a;
+        --ck-color-text: #e0e0e0;
+        --ck-color-base-foreground: #2d2d2d;
+        --ck-color-toolbar-background: #252525;
+        --ck-color-editor-background: #1e1e1e;
+        --ck-color-button-default-background: #3a3a3a;
+        --ck-color-button-default-hover-background: #4a4a4a;
+        --ck-color-button-on-background: #264b5d;
+        --ck-color-list-background: #2d2d2d;
+        --ck-color-panel-background: #2d2d2d;
+        --ck-color-input-background: #2d2d2d;
+        --ck-color-input-border: #3a3a3a;
+    }
+}
