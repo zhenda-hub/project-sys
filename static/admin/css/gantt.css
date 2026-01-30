@@ -52,6 +52,35 @@
     align-items: center;
 }
 
+/* 时间刻度切换控件 */
+.gantt-scale-controls {
+    margin: 10px 0;
+    display: flex;
+    gap: 5px;
+}
+
+.scale-btn {
+    padding: 6px 16px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.scale-btn:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+
+.scale-btn.active {
+    background: #0b5ed7;
+    color: #fff;
+    border-color: #0a58ca;
+}
+
 .gantt-filters label {
     display: flex;
     align-items: center;

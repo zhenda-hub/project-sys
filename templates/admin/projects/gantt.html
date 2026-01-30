@@ -28,6 +28,13 @@
             <button id="refresh-btn" class="button">刷新</button>
         </div>
 
+        <!-- 时间刻度切换 -->
+        <div class="gantt-scale-controls">
+            <button class="scale-btn" data-scale="year">年</button>
+            <button class="scale-btn active" data-scale="month">月</button>
+            <button class="scale-btn" data-scale="week">周</button>
+        </div>
+
         <!-- 甘特图容器 -->
         <div id="gantt_here" style="width:100%; height:500px;"></div>
 
@@ -67,6 +74,28 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     let currentData = rawData;
+
+    // 定义不同刻度配置
+    const scaleConfigs = {
+        year: [
+            { unit: "year", step: 1, format: "%Y年", column_width: 150 }
+        ],
+        month: [
+            { unit: "year", step: 1, format: "%Y年" },
+            { unit: "month", step: 1, format: "%m月", column_width: 80 }
+        ],
+        week: [
+            { unit: "year", step: 1, format: "%Y年" },
+            { unit: "month", step: 1, format: "%m月" },
+            { unit: "week", step: 1, format: "第%W周", column_width: 50 }
+        ]
+    };
+
+    // 切换刻度
+    function changeScale(level) {
+        gantt.config.scales = scaleConfigs[level];
+        gantt.render();
+    }
 
     // 转换为 DHTMLX Gantt 格式
     function convertToTasks(data) {
@@ -147,12 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
     gantt.config.order_branch_free = true;
     gantt.config.open_tree_initially = true;
 
-    // 设置时间刻度 - 年/月/周
-    gantt.config.scales = [
-        { unit: "year", step: 1, format: "%Y年" },
-        { unit: "month", step: 1, format: "%m月" },
-        { unit: "week", step: 1, format: "第%W周", column_width: 50 }
-    ];
+    // 设置时间刻度 - 默认月视图
+    gantt.config.scales = scaleConfigs.month;
 
     // 配置列
     gantt.config.columns = [
@@ -270,6 +295,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('show-completed').addEventListener('change', filterData);
     document.getElementById('show-only-mine').addEventListener('change', filterData);
     document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
+
+    // 刻度切换按钮事件
+    document.querySelectorAll('.scale-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            changeScale(this.dataset.scale);
+        });
+    });
 
     function filterData() {
         const showCompleted = document.getElementById('show-completed').checked;
