@@ -3,6 +3,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
+<link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
 <link rel="stylesheet" href="{% static 'admin/css/gantt.css' %}">
 {% endblock %}
 
@@ -28,9 +29,7 @@
         </div>
 
         <!-- 甘特图容器 -->
-        <div class="gantt-container">
-            <div id="gantt_chart"></div>
-        </div>
+        <div id="gantt_here" style="width:100%; height:500px;"></div>
 
         <!-- 图例 -->
         <div class="gantt-legend">
@@ -46,80 +45,230 @@
 
 {% block extrahead %}
 {{ block.super }}
-<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 加载 Google Charts
-    google.charts.load('current', {'packages':['gantt']});
-    google.charts.setOnLoadCallback(drawChart);
-
     // 原始数据
     const rawData = [
         {% for project in projects %}
         {
             id: '{{ project.id }}',
             name: '{{ project.name|escapejs }}',
-            start: '{{ project.start_date|date:"Y-m-d" }}',
-            end: '{{ project.end_date|date:"Y-m-d" }}',
-            progress: {% if project.status %}100{% else %}0{% endif %},
+            start_date: '{{ project.start_date|date:"Y-m-d" }}',
+            end_date: '{{ project.end_date|date:"Y-m-d" }}',
+            progress: {% if project.status %}1{% else %}0{% endif %},
             priority: {{ project.priority }},
-            priorityLabel: '{% if project.priority == 3 %}重要紧急{% elif project.priority == 2 %}重要不紧急{% elif project.priority == 1 %}不重要紧急{% else %}不重要不紧急{% endif %}',
             user: '{{ project.user.username|escapejs }}',
             what: '{{ project.what|escapejs }}',
-            status: {{ project.status|yesno:"true,false" }}
+            status: {{ project.status|yesno:"true,false" }},
+            duration: 1
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ];
 
-    let chart;
     let currentData = rawData;
 
-    function drawChart() {
-        const data = new google.visualization.DataTable();
-        data.addColumn('string', 'Task ID');
-        data.addColumn('string', 'Task Name');
-        data.addColumn('string', 'Resource');
-        data.addColumn('date', 'Start Date');
-        data.addColumn('date', 'End Date');
-        data.addColumn('number', 'Duration');
-        data.addColumn('number', 'Percent Complete');
-        data.addColumn('string', 'Dependencies');
+    // 转换为 DHTMLX Gantt 格式
+    function convertToTasks(data) {
+        return data.map(p => ({
+            id: p.id,
+            text: p.name,
+            start_date: p.start_date,
+            end_date: p.end_date,
+            progress: p.progress,
+            priority: p.priority,
+            user: p.user,
+            what: p.what,
+            status: p.status,
+            type: gantt.config.types.project,
+            open: true
+        }));
+    }
 
-        const rows = currentData.map(p => [
-            String(p.id),
-            p.name,
-            p.priorityLabel,
-            new Date(p.start),
-            new Date(p.end),
-            null,
-            p.progress,
-            null
-        ]);
+    // 根据任务数据设置时间范围
+    function setTimeRangeFromTasks() {
+        if (currentData.length === 0) return;
 
-        data.addRows(rows);
+        // 找出最早开始时间和最晚结束时间
+        let minDate = null;
+        let maxDate = null;
 
-        const options = {
-            height: 400,
-            gantt: {
-                trackHeight: 30,
-                // 禁用自动排序
-                sortTasks: false
-            }
+        currentData.forEach(p => {
+            const start = new Date(p.start_date);
+            const end = new Date(p.end_date);
+
+            if (!minDate || start < minDate) minDate = start;
+            if (!maxDate || end > maxDate) maxDate = end;
+        });
+
+        if (minDate && maxDate) {
+            // 设置时间范围，前后各加一些余量
+            const startDate = new Date(minDate);
+            startDate.setMonth(startDate.getMonth() - 1); // 前推1个月
+
+            const endDate = new Date(maxDate);
+            endDate.setMonth(endDate.getMonth() + 6); // 后推6个月
+
+            gantt.config.start_date = startDate;
+            gantt.config.end_date = endDate;
+        }
+    }
+
+    // 获取优先级标签
+    function getPriorityLabel(priority) {
+        const labels = {
+            3: '重要紧急',
+            2: '重要不紧急',
+            1: '不重要紧急',
+            0: '不重要不紧急'
         };
+        return labels[priority] || '';
+    }
 
-        chart = new google.visualization.Gantt(document.getElementById('gantt_chart'));
-        chart.draw(data, options);
+    // 格式化日期显示
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 配置 DHTMLX Gantt
+    gantt.config.date_format = "%Y-%m-%d";
+    gantt.config.scale_height = 50;
+    gantt.config.row_height = 30;
+    gantt.config.task_height = 18;
+    gantt.config.work_time = true;
+    gantt.config.show_links = false;
+    gantt.config.details_on_create = false;
+    gantt.config.details_on_dblclick = false;
+    gantt.config.order_branch = true;
+    gantt.config.order_branch_free = true;
+    gantt.config.open_tree_initially = true;
+
+    // 设置时间刻度 - 年/月/周
+    gantt.config.scales = [
+        { unit: "year", step: 1, format: "%Y年" },
+        { unit: "month", step: 1, format: "%m月" },
+        { unit: "week", step: 1, format: "第%W周", column_width: 50 }
+    ];
+
+    // 配置列
+    gantt.config.columns = [
+        { name: "text", label: "项目名称", width: 250, resize: true, tree: true }
+    ];
+
+    // 配置今天标记（使用标准版方式 - 简化版）
+    function updateTodayMarker() {
+        const today = new Date();
+        const pos = gantt.posFromDate(today);
+
+        // 移除旧的标记
+        const oldMarkers = document.querySelectorAll('.custom-today-marker');
+        oldMarkers.forEach(m => m.remove());
+
+        // 获取任务区域容器
+        const taskContainer = document.querySelector('.gantt_task');
+        if (!taskContainer) return;
+
+        // 创建今天标记线
+        const marker = document.createElement('div');
+        marker.className = 'custom-today-marker';
+        marker.style.cssText = `
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: ${pos}px;
+            width: 2px;
+            background-color: #ff6b6b;
+            z-index: 2;
+            pointer-events: none;
+        `;
+
+        // 添加标签（隐藏以避免遮挡时间刻度）
+        const label = document.createElement('div');
+        label.className = 'custom-today-marker-label';
+        label.textContent = '今天';
+        label.style.cssText = `
+            display: none;
+        `;
+
+        marker.appendChild(label);
+        taskContainer.appendChild(marker);
+    }
+
+    // 在渲染后更新今天标记
+    gantt.attachEvent("onAfterGanttRender", function(){
+        setTimeout(updateTodayMarker, 50);
+    });
+
+    gantt.attachEvent("onGanttScroll", function(){
+        updateTodayMarker();
+    });
+
+    gantt.attachEvent("onViewChange", function(){
+        updateTodayMarker();
+    });
+
+    // 自定义任务条渲染
+    gantt.templates.task_class = function(start, end, task) {
+        const priorityMap = {
+            3: 'priority-critical',
+            2: 'priority-high',
+            1: 'priority-medium',
+            0: 'priority-low'
+        };
+        return priorityMap[task.priority] || '';
+    };
+
+    // 自定义任务条文本
+    gantt.templates.task_text = function(start, end, task) {
+        return task.text;
+    };
+
+    // 自定义工具提示
+    gantt.templates.tooltip_text = function(start, end, task) {
+        const project = rawData.find(p => p.id === task.id);
+        if (!project) return task.text;
+
+        return `
+            <div class="gantt-tooltip-content">
+                <strong>${project.name}</strong><br/>
+                执行内容: ${project.what || '无'}<br/>
+                负责人: ${project.user}<br/>
+                优先级: ${getPriorityLabel(project.priority)}<br/>
+                进度: ${Math.round(project.progress * 100)}%<br/>
+                时间: ${formatDate(project.start_date)} ~ ${formatDate(project.end_date)}<br/>
+                状态: ${project.status ? '已完成' : '进行中'}
+            </div>
+        `;
+    };
+
+    // 启用工具提示
+    gantt.config.tooltip_timeout = 500;
+    gantt.config.tooltip_offset_y = 30;
+
+    // 初始化甘特图
+    gantt.init("gantt_here");
+
+    // 加载数据
+    function loadGantt() {
+        // 先设置时间范围
+        setTimeRangeFromTasks();
+
+        const tasks = {
+            data: convertToTasks(currentData),
+            links: []
+        };
+        gantt.clearAll();
+        gantt.render();
+        gantt.parse(tasks);
     }
 
     // 过滤功能
-    document.getElementById('show-completed').addEventListener('change', function() {
-        filterData();
-    });
-
-    document.getElementById('show-only-mine').addEventListener('change', function() {
-        filterData();
-    });
-
+    document.getElementById('show-completed').addEventListener('change', filterData);
+    document.getElementById('show-only-mine').addEventListener('change', filterData);
     document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
 
     function filterData() {
@@ -133,11 +282,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         });
 
-        drawChart();
+        loadGantt();
     }
 
-    // 窗口大小改变时重绘
-    window.addEventListener('resize', drawChart);
+    // 初始加载
+    loadGantt();
 });
 </script>
 {% endblock %}

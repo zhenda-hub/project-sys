@@ -1,18 +1,45 @@
 /* 甘特图容器 */
-.gantt-container {
+#gantt_here {
     margin: 20px 0;
-    overflow-x: auto;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e0e4e8;
+    border-radius: 8px;
 }
 
-/* 优先级颜色 - 对应艾森豪威尔矩阵 */
-.priority-critical { fill: #d32f2f !important; } /* 重要紧急 - 红色 */
-.priority-high { fill: #f57c00 !important; }     /* 重要不紧急 - 橙色 */
-.priority-medium { fill: #fbc02d !important; }   /* 不重要紧急 - 黄色 */
-.priority-low { fill: #388e3c !important; }      /* 不重要不紧急 - 绿色 */
+/* DHTMLX Gantt - 优先级颜色 */
+.gantt_task_line.priority-critical {
+    background-color: #d32f2f !important;
+    border-color: #b71c1c !important;
+}
+
+.gantt_task_line.priority-high {
+    background-color: #f57c00 !important;
+    border-color: #e65100 !important;
+}
+
+.gantt_task_line.priority-medium {
+    background-color: #fbc02d !important;
+    border-color: #f9a825 !important;
+}
+
+.gantt_task_line.priority-low {
+    background-color: #388e3c !important;
+    border-color: #2e7d32 !important;
+}
+
+/* DHTMLX Gantt - 今天标记 */
+.gantt_marker.today_line {
+    background-color: #ff6b6b;
+    width: 2px;
+}
+
+.gantt_marker.today_line .gantt_marker_content {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+}
 
 /* 过滤器 */
 .gantt-filters {
@@ -58,32 +85,43 @@
     border-radius: 2px;
 }
 
-/* 弹出详情 */
-.details-container {
-    padding: 10px;
-    min-width: 200px;
+/* 图例颜色 */
+.legend-color.priority-critical {
+    background-color: #d32f2f;
 }
 
-.details-container h4 {
-    margin: 0 0 10px;
-    color: #333;
+.legend-color.priority-high {
+    background-color: #f57c00;
 }
 
-.details-container p {
-    margin: 5px 0;
-    font-size: 12px;
-    color: #666;
+.legend-color.priority-medium {
+    background-color: #fbc02d;
 }
 
-.details-container a {
-    display: inline-block;
-    margin-top: 10px;
-    color: #1976d2;
-    text-decoration: none;
+.legend-color.priority-low {
+    background-color: #388e3c;
 }
 
-.details-container a:hover {
-    text-decoration: underline;
+/* DHTMLX Gantt 工具提示样式 */
+.gantt_tooltip {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 14px !important;
+    font-size: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.gantt_tooltip_content {
+    line-height: 1.6;
+}
+
+.gantt_tooltip_content strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #fff;
 }
 
 /* 响应式调整 */
