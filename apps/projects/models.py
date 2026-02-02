@@ -3,8 +3,7 @@ from django.db import models
 from django.utils.timezone import now
 
 from tinymce.models import HTMLField
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field as RichTextUploadingField
 from markdownx.models import MarkdownxField
 from mdeditor.fields import MDTextField
 

@@ -58,7 +58,7 @@ urlpatterns = [
 
     path('tinymce/', include('tinymce.urls')),
     path('markdownx/', include('markdownx.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('vditor/', include('vditor.urls')),
 
 ]

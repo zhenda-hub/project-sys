@@ -59,9 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.humanize', # 人性化显示
-    
-    'ckeditor',
-    'ckeditor_uploader',  # 带图片上传的ckeditor
+
+    'django_ckeditor_5',
     'tinymce',
 
     'markdownx',
@@ -246,91 +245,26 @@ MDEDITOR_CONFIGS = {
 }
 
 
-CKEDITOR_UPLOAD_PATH = "uploads/"  # 文件保存位置，因为上边配置了media， 图片将保存至media/uploads下
-CKEDITOR_RESTRICT_BY_USER = True  # 是否限制用户访问
-# CKEDITOR_JQUERY_URL = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'  # 使用jquery库
-# CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
-# CKEDITOR_IMAGE_BACKEND = 'pillow'  # 图片上传使用pillow插件
-
-CKEDITOR_CONFIGS = {
+# CKEditor 5 配置
+CKEDITOR_5_CONFIGS = {
     'default': {
-        'skin': 'moono',
-        # 'skin': 'office2013',
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'link', '|',
+            'bulletedList', 'numberedList', '|',
+            'imageUpload', 'blockQuote', 'insertTable', '|',
+            'undo', 'redo'
         ],
-        'toolbarLocation': 'bottom',  # set toolbar at bottom of window
-        'toolbar_YourCustomToolbarConfig': [
-            {'name': 'document', 'items': ['Source', 'Preview', 'Templates']},
-            {'name': 'clipboard', 'items': [
-                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': [
-                'Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            '/',  # put this to force next toolbar on new line
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
-            # {'name': 'paragraph',
-            #  'items': ['NumberedList', 'BulletedList', '-',
-            #            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
-            #
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert',
-             'items': ['Image', 'CodeSnippet', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak',
-                       'Iframe']},
-            '/',  # put this to force next toolbar on new line
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'styles', 'items': ['Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-
-        ],
-
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-
-        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        # 'height': 291,
-        # 'width': '100%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
-        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',  # the upload image feature
-            # your extra plugins here
-            # 'image2',  # simplified image upload plugin
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            # 'devtools',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath',
-
-            # 移除右键菜单相关的插件
-
-        ]),
-        # 'removePlugins': ','.join([
-        #     'menubutton',  # 移除菜单按钮插件
-        #     'contextmenu',  # 移除右键菜单插件
-        #     'liststyle',
-        #     'tabletools',
-        # ]),
-        # 'startupFocus': True,
-        # 'touchenabled': False,
-    }
+        'language': 'zh-cn',
+        'image': {
+            'upload': {
+                'types': ['jpeg', 'png', 'gif', 'bmp', 'webp'],
+            }
+        },
+    },
 }
-# CKEDITOR_BROWSE_SHOW_DIRS = True  # 显示目录浏览
-# CKEDITOR_ALLOW_NONIMAGE_FILES = True
+
+CKEDITOR_5_FILE_UPLOAD_UPLOAD = 'uploads/'
 
 VDITOR_CONFIGS = {  # remember to write "' '"
     'default': {

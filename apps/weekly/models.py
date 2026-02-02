@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field as RichTextUploadingField
 from apps.core.models import BaseModel
 
 
