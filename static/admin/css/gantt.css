@@ -160,3 +160,85 @@
         align-items: flex-start;
     }
 }
+
+/* ===== 暗色主题适配 ===== */
+
+/* 当 Admin 是 dark 主题时 */
+html[data-theme="dark"] #gantt_here {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border-color: #3a3a3a;
+}
+
+html[data-theme="dark"] .gantt-filters {
+    background: #252525;
+}
+
+html[data-theme="dark"] .scale-btn {
+    border-color: #3a3a3a;
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+
+html[data-theme="dark"] .scale-btn:hover {
+    background: #3a3a3a;
+    border-color: #4a4a4a;
+}
+
+html[data-theme="dark"] .scale-btn.active {
+    background: #264b5d;
+    color: #fff;
+    border-color: #1e3a47;
+}
+
+html[data-theme="dark"] .gantt-legend {
+    background: #252525;
+}
+
+html[data-theme="dark"] .gantt-legend h4 {
+    color: #e0e0e0;
+}
+
+html[data-theme="dark"] .legend-item {
+    color: #b0b0b0;
+}
+
+/* Auto 模式 - 跟随系统 */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] #gantt_here {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border-color: #3a3a3a;
+    }
+
+    html[data-theme="auto"] .gantt-filters {
+        background: #252525;
+    }
+
+    html[data-theme="auto"] .scale-btn {
+        border-color: #3a3a3a;
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    html[data-theme="auto"] .scale-btn:hover {
+        background: #3a3a3a;
+        border-color: #4a4a4a;
+    }
+
+    html[data-theme="auto"] .scale-btn.active {
+        background: #264b5d;
+        color: #fff;
+        border-color: #1e3a47;
+    }
+
+    html[data-theme="auto"] .gantt-legend {
+        background: #252525;
+    }
+
+    html[data-theme="auto"] .gantt-legend h4 {
+        color: #e0e0e0;
+    }
+
+    html[data-theme="auto"] .legend-item {
+        color: #b0b0b0;
+    }
+}
