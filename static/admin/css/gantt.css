@@ -1,0 +1,244 @@
+/* 甘特图容器 */
+#gantt_here {
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e0e4e8;
+    border-radius: 8px;
+}
+
+/* DHTMLX Gantt - 优先级颜色 */
+.gantt_task_line.priority-critical {
+    background-color: #d32f2f !important;
+    border-color: #b71c1c !important;
+}
+
+.gantt_task_line.priority-high {
+    background-color: #f57c00 !important;
+    border-color: #e65100 !important;
+}
+
+.gantt_task_line.priority-medium {
+    background-color: #fbc02d !important;
+    border-color: #f9a825 !important;
+}
+
+.gantt_task_line.priority-low {
+    background-color: #388e3c !important;
+    border-color: #2e7d32 !important;
+}
+
+/* DHTMLX Gantt - 今天标记 */
+.gantt_marker.today_line {
+    background-color: #ff6b6b;
+    width: 2px;
+}
+
+.gantt_marker.today_line .gantt_marker_content {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+/* 过滤器 */
+.gantt-filters {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* 时间刻度切换控件 */
+.gantt-scale-controls {
+    margin: 10px 0;
+    display: flex;
+    gap: 5px;
+}
+
+.scale-btn {
+    padding: 6px 16px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.scale-btn:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+
+.scale-btn.active {
+    background: #0b5ed7;
+    color: #fff;
+    border-color: #0a58ca;
+}
+
+.gantt-filters label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* 图例 */
+.gantt-legend {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.gantt-legend h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.legend-color {
+    width: 30px;
+    height: 15px;
+    border-radius: 2px;
+}
+
+/* 图例颜色 */
+.legend-color.priority-critical {
+    background-color: #d32f2f;
+}
+
+.legend-color.priority-high {
+    background-color: #f57c00;
+}
+
+.legend-color.priority-medium {
+    background-color: #fbc02d;
+}
+
+.legend-color.priority-low {
+    background-color: #388e3c;
+}
+
+/* DHTMLX Gantt 工具提示样式 */
+.gantt_tooltip {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 14px !important;
+    font-size: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.gantt_tooltip_content {
+    line-height: 1.6;
+}
+
+.gantt_tooltip_content strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #fff;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .gantt-filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== 暗色主题适配 ===== */
+
+/* 当 Admin 是 dark 主题时 */
+html[data-theme="dark"] #gantt_here {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border-color: #3a3a3a;
+}
+
+html[data-theme="dark"] .gantt-filters {
+    background: #252525;
+}
+
+html[data-theme="dark"] .scale-btn {
+    border-color: #3a3a3a;
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+
+html[data-theme="dark"] .scale-btn:hover {
+    background: #3a3a3a;
+    border-color: #4a4a4a;
+}
+
+html[data-theme="dark"] .scale-btn.active {
+    background: #264b5d;
+    color: #fff;
+    border-color: #1e3a47;
+}
+
+html[data-theme="dark"] .gantt-legend {
+    background: #252525;
+}
+
+html[data-theme="dark"] .gantt-legend h4 {
+    color: #e0e0e0;
+}
+
+html[data-theme="dark"] .legend-item {
+    color: #b0b0b0;
+}
+
+/* Auto 模式 - 跟随系统 */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] #gantt_here {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border-color: #3a3a3a;
+    }
+
+    html[data-theme="auto"] .gantt-filters {
+        background: #252525;
+    }
+
+    html[data-theme="auto"] .scale-btn {
+        border-color: #3a3a3a;
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    html[data-theme="auto"] .scale-btn:hover {
+        background: #3a3a3a;
+        border-color: #4a4a4a;
+    }
+
+    html[data-theme="auto"] .scale-btn.active {
+        background: #264b5d;
+        color: #fff;
+        border-color: #1e3a47;
+    }
+
+    html[data-theme="auto"] .gantt-legend {
+        background: #252525;
+    }
+
+    html[data-theme="auto"] .gantt-legend h4 {
+        color: #e0e0e0;
+    }
+
+    html[data-theme="auto"] .legend-item {
+        color: #b0b0b0;
+    }
+}

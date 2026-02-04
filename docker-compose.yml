@@ -7,7 +7,6 @@ services:
       - "8200:8000"  # 直接暴露端口给外部访问
     # user: "${UID}:${GID}"  # 使用非root用户运行容器, 防止权限问题
     volumes:
-      - ./:/app
       - static_volume:/app/static
       - media_volume:/app/media
     logging:
@@ -20,7 +19,7 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       # - DJANGO_SETTINGS_MODULE=project_sys.settings
-    command: ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
+    command: ["sh", "-c", "uv run python manage.py runserver 0.0.0.0:8000"]
     # command: [
     #   "gunicorn", 
     #   "project_sys.wsgi:application", 

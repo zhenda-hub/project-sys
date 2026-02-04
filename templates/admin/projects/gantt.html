@@ -1,0 +1,363 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
+<link rel="stylesheet" href="{% static 'admin/css/gantt.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label='projects' %}">Projects</a>
+&rsaquo; <a href="{% url 'admin:projects_projectmodel_changelist' %}">项目</a>
+&rsaquo; {% translate '项目甘特图' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>项目甘特图</h2>
+
+        <!-- 过滤器 -->
+        <div class="gantt-filters">
+            <label><input type="checkbox" id="show-completed" checked> 显示已完成项目</label>
+            <label><input type="checkbox" id="show-only-mine"> 仅显示我的项目</label>
+            <button id="refresh-btn" class="button">刷新</button>
+        </div>
+
+        <!-- 时间刻度切换 -->
+        <div class="gantt-scale-controls">
+            <button class="scale-btn" data-scale="year">年</button>
+            <button class="scale-btn active" data-scale="month">月</button>
+            <button class="scale-btn" data-scale="week">周</button>
+        </div>
+
+        <!-- 甘特图容器 -->
+        <div id="gantt_here" style="width:100%; height:500px;"></div>
+
+        <!-- 图例 -->
+        <div class="gantt-legend">
+            <h4>优先级图例</h4>
+            <div class="legend-item"><span class="legend-color priority-critical"></span><span>重要紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-high"></span><span>重要不紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-medium"></span><span>不重要紧急</span></div>
+            <div class="legend-item"><span class="legend-color priority-low"></span><span>不重要不紧急</span></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+<script>
+// 检测 Django Admin 主题并应用到甘特图
+function applyGanttTheme() {
+    const htmlElement = document.documentElement;
+    const theme = htmlElement.getAttribute('data-theme') || 'light';
+
+    if (theme === 'dark') {
+        gantt.setSkin('dark');
+    } else if (theme === 'auto') {
+        // 检测系统主题偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            gantt.setSkin('dark');
+        } else {
+            gantt.setSkin('terrace');  // 默认 light 主题
+        }
+    } else {
+        gantt.setSkin('terrace');  // 默认 light 主题
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 监听主题变化
+    const themeObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                applyGanttTheme();
+            }
+        });
+    });
+
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+    });
+
+
+    // 原始数据
+    const rawData = [
+        {% for project in projects %}
+        {
+            id: '{{ project.id }}',
+            name: '{{ project.name|escapejs }}',
+            start_date: '{{ project.start_date|date:"Y-m-d" }}',
+            end_date: '{{ project.end_date|date:"Y-m-d" }}',
+            progress: {% if project.status %}1{% else %}0{% endif %},
+            priority: {{ project.priority }},
+            user: '{{ project.user.username|escapejs }}',
+            what: '{{ project.what|escapejs }}',
+            status: {{ project.status|yesno:"true,false" }},
+            duration: 1
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    let currentData = rawData;
+
+    // 定义不同刻度配置
+    const scaleConfigs = {
+        year: [
+            { unit: "year", step: 1, format: "%Y年", column_width: 150 }
+        ],
+        month: [
+            { unit: "year", step: 1, format: "%Y年" },
+            { unit: "month", step: 1, format: "%m月", column_width: 80 }
+        ],
+        week: [
+            { unit: "year", step: 1, format: "%Y年" },
+            { unit: "month", step: 1, format: "%m月" },
+            { unit: "week", step: 1, format: "第%W周", column_width: 50 }
+        ]
+    };
+
+    // 切换刻度
+    function changeScale(level) {
+        gantt.config.scales = scaleConfigs[level];
+        gantt.render();
+    }
+
+    // 转换为 DHTMLX Gantt 格式
+    function convertToTasks(data) {
+        return data.map(p => ({
+            id: p.id,
+            text: p.name,
+            start_date: p.start_date,
+            end_date: p.end_date,
+            progress: p.progress,
+            priority: p.priority,
+            user: p.user,
+            what: p.what,
+            status: p.status,
+            type: gantt.config.types.project,
+            open: true
+        }));
+    }
+
+    // 根据任务数据设置时间范围
+    function setTimeRangeFromTasks() {
+        if (currentData.length === 0) return;
+
+        // 找出最早开始时间和最晚结束时间
+        let minDate = null;
+        let maxDate = null;
+
+        currentData.forEach(p => {
+            const start = new Date(p.start_date);
+            const end = new Date(p.end_date);
+
+            if (!minDate || start < minDate) minDate = start;
+            if (!maxDate || end > maxDate) maxDate = end;
+        });
+
+        if (minDate && maxDate) {
+            // 设置时间范围，前后各加一些余量
+            const startDate = new Date(minDate);
+            startDate.setMonth(startDate.getMonth() - 1); // 前推1个月
+
+            const endDate = new Date(maxDate);
+            endDate.setMonth(endDate.getMonth() + 6); // 后推6个月
+
+            gantt.config.start_date = startDate;
+            gantt.config.end_date = endDate;
+        }
+    }
+
+    // 获取优先级标签
+    function getPriorityLabel(priority) {
+        const labels = {
+            3: '重要紧急',
+            2: '重要不紧急',
+            1: '不重要紧急',
+            0: '不重要不紧急'
+        };
+        return labels[priority] || '';
+    }
+
+    // 格式化日期显示
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 配置 DHTMLX Gantt
+    gantt.config.date_format = "%Y-%m-%d";
+    gantt.config.scale_height = 50;
+    gantt.config.row_height = 30;
+    gantt.config.task_height = 18;
+    gantt.config.work_time = true;
+    gantt.config.show_links = false;
+    gantt.config.details_on_create = false;
+    gantt.config.details_on_dblclick = false;
+    gantt.config.order_branch = true;
+    gantt.config.order_branch_free = true;
+    gantt.config.open_tree_initially = true;
+
+    // 设置时间刻度 - 默认月视图
+    gantt.config.scales = scaleConfigs.month;
+
+    // 配置列
+    gantt.config.columns = [
+        { name: "text", label: "项目名称", width: 250, resize: true, tree: true }
+    ];
+
+    // 配置今天标记（使用标准版方式 - 简化版）
+    function updateTodayMarker() {
+        const today = new Date();
+        const pos = gantt.posFromDate(today);
+
+        // 移除旧的标记
+        const oldMarkers = document.querySelectorAll('.custom-today-marker');
+        oldMarkers.forEach(m => m.remove());
+
+        // 获取任务区域容器
+        const taskContainer = document.querySelector('.gantt_task');
+        if (!taskContainer) return;
+
+        // 创建今天标记线
+        const marker = document.createElement('div');
+        marker.className = 'custom-today-marker';
+        marker.style.cssText = `
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: ${pos}px;
+            width: 2px;
+            background-color: #ff6b6b;
+            z-index: 2;
+            pointer-events: none;
+        `;
+
+        // 添加标签（隐藏以避免遮挡时间刻度）
+        const label = document.createElement('div');
+        label.className = 'custom-today-marker-label';
+        label.textContent = '今天';
+        label.style.cssText = `
+            display: none;
+        `;
+
+        marker.appendChild(label);
+        taskContainer.appendChild(marker);
+    }
+
+    // 在渲染后更新今天标记
+    gantt.attachEvent("onAfterGanttRender", function(){
+        setTimeout(updateTodayMarker, 50);
+    });
+
+    gantt.attachEvent("onGanttScroll", function(){
+        updateTodayMarker();
+    });
+
+    gantt.attachEvent("onViewChange", function(){
+        updateTodayMarker();
+    });
+
+    // 自定义任务条渲染
+    gantt.templates.task_class = function(start, end, task) {
+        const priorityMap = {
+            3: 'priority-critical',
+            2: 'priority-high',
+            1: 'priority-medium',
+            0: 'priority-low'
+        };
+        return priorityMap[task.priority] || '';
+    };
+
+    // 自定义任务条文本
+    gantt.templates.task_text = function(start, end, task) {
+        return task.text;
+    };
+
+    // 自定义工具提示
+    gantt.templates.tooltip_text = function(start, end, task) {
+        const project = rawData.find(p => p.id === task.id);
+        if (!project) return task.text;
+
+        return `
+            <div class="gantt-tooltip-content">
+                <strong>${project.name}</strong><br/>
+                执行内容: ${project.what || '无'}<br/>
+                负责人: ${project.user}<br/>
+                优先级: ${getPriorityLabel(project.priority)}<br/>
+                进度: ${Math.round(project.progress * 100)}%<br/>
+                时间: ${formatDate(project.start_date)} ~ ${formatDate(project.end_date)}<br/>
+                状态: ${project.status ? '已完成' : '进行中'}
+            </div>
+        `;
+    };
+
+    // 启用工具提示
+    gantt.config.tooltip_timeout = 500;
+    gantt.config.tooltip_offset_y = 30;
+
+    // 初始化甘特图
+    gantt.init("gantt_here");
+
+    // 应用当前主题
+    applyGanttTheme();
+
+    // 加载数据
+    function loadGantt() {
+        // 先设置时间范围
+        setTimeRangeFromTasks();
+
+        const tasks = {
+            data: convertToTasks(currentData),
+            links: []
+        };
+        gantt.clearAll();
+        gantt.render();
+        gantt.parse(tasks);
+    }
+
+    // 过滤功能
+    document.getElementById('show-completed').addEventListener('change', filterData);
+    document.getElementById('show-only-mine').addEventListener('change', filterData);
+    document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
+
+    // 刻度切换按钮事件
+    document.querySelectorAll('.scale-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            changeScale(this.dataset.scale);
+        });
+    });
+
+    function filterData() {
+        const showCompleted = document.getElementById('show-completed').checked;
+        const showOnlyMine = document.getElementById('show-only-mine').checked;
+        const currentUser = '{{ request.user.username }}';
+
+        currentData = rawData.filter(p => {
+            if (!showCompleted && p.status) return false;
+            if (showOnlyMine && p.user !== currentUser) return false;
+            return true;
+        });
+
+        loadGantt();
+    }
+
+    // 初始加载
+    loadGantt();
+});
+</script>
+{% endblock %}
