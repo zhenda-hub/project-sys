@@ -49,51 +49,9 @@ TODO:
 
 
 
-TODO: add photo
-
----
-
-## 数据导出HTML标签问题
-
-### 问题描述
-使用 `RichTextUploadingField` 的字段导出到 Excel 时，包含 HTML 标签，用户只需要纯文本。
-
-### 影响范围
-- `ProjectModelResource` in `apps/projects/admin.py` - 字段: `why`, `how`
-- `WeeklyResource` in `apps/weekly/admin.py` - 字段: `content`
-
-### 解决方案
-在 Resource 类中重写 `dehydrate_<fieldname>()` 方法，使用 Django 内置的 `strip_tags` 工具去除 HTML 标签。
-
-### 修改文件
-
-#### 1. `apps/projects/admin.py`
-```python
-from django.utils.html import strip_tags
-
-class ProjectModelResource(resources.ModelResource):
-    class Meta:
-        model = ProjectModel
-
-    def dehydrate_why(self, obj):
-        return strip_tags(obj.why)
-
-    def dehydrate_how(self, obj):
-        return strip_tags(obj.how)
-```
-
-#### 2. `apps/weekly/admin.py`
-```python
-from django.utils.html import strip_tags
-
-class WeeklyResource(resources.ModelResource):
-    class Meta:
-        model = Weekly
-
-    def dehydrate_content(self, obj):
-        return strip_tags(obj.content)
-```
-
-
 gantt访问地址： http://localhost:8200/admin/projects/projectmodel/gantt/
 
+gantt方案决策记录：
+  1. Google Charts Gantt（初始方案）
+  2. Frappe Gantt
+  3. DHTMLX Gantt（最终采用 ✅）
