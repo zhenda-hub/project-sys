@@ -1,0 +1,10 @@
+{# 甘特图按钮 - 继承 import_export 模板 #}
+{% extends "admin/import_export/change_list_import_export.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  <li>
+    <a href="/admin/projects/projectmodel/gantt/" class="button">甘特图</a>
+  </li>
+{% endblock %}

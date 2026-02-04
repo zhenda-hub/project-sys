@@ -18,6 +18,7 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
     list_filter = ['user', 'status', 'priority', 'end_date']
     search_fields = ['name', 'what', 'why', 'how', 'think']
     ordering = ['status', '-priority', 'end_date']
+    import_export_change_list_template = "admin/projects/change_list_import_export.html"
 
     readonly_fields = ['user']
     fieldsets = (

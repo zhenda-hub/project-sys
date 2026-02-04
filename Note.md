@@ -97,3 +97,52 @@ class WeeklyResource(resources.ModelResource):
 
 gantt访问地址： http://localhost:8200/admin/projects/projectmodel/gantt/
 
+---
+
+## ImportExportModelAdmin 模板覆盖难点
+
+### 问题描述
+在 `ImportExportModelAdmin` 的项目列表页面添加自定义按钮（如"甘特图"）时，使用常规的 `admin/change_list.html` 模板覆盖方法无效。
+
+### 原因分析
+`ImportExportModelAdmin` 使用的是 `admin/import_export/change_list_import_export.html` 模板，而不是 Django 默认的 `admin/change_list.html`。
+
+当你创建 `templates/admin/projects/change_list.html` 时，Django 不会使用它，因为 `ImportExportModelAdmin` 已经指定了自己的模板。
+
+### 解决方案
+
+#### 方法 1：在 admin.py 中指定自定义模板（推荐）
+
+**步骤：**
+
+1. 在 `ProjectModelAdmin` 类中指定自定义模板：
+```python
+class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
+    import_export_change_list_template = "admin/projects/change_list_import_export.html"
+```
+
+2. 创建模板文件 `apps/projects/templates/admin/projects/change_list_import_export.html`：
+```django
+{% extends "admin/import_export/change_list_import_export.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  <li>
+    <a href="/admin/projects/projectmodel/gantt/" class="button">甘特图</a>
+  </li>
+{% endblock %}
+```
+
+**关键点：**
+- 继承 `admin/import_export/change_list_import_export.html` 而不是 `admin/change_list.html`
+- 只调用 `{{ block.super }}` 来获取父模板的导入/导出按钮
+- 不要重复 `{% include "admin/import_export/change_list_import_item.html" %}`，否则按钮会重复显示
+
+#### 方法 2：覆盖全局 import_export 模板（不推荐）
+在 `templates/admin/import_export/change_list_import_export.html` 中添加按钮，但这会影响所有使用 ImportExportModelAdmin 的应用。
+
+### 相关文件
+- `apps/projects/admin.py` - 添加 `import_export_change_list_template` 配置
+- `apps/projects/templates/admin/projects/change_list_import_export.html` - 自定义模板
+
