@@ -13,6 +13,7 @@ dependencies = [
     "Django>=4.2,<5",
     "django-admin-interface>=0.30.1",
     "django-ckeditor>=6.6.1",
+    "django-ckeditor-5>=0.2.19",
     "django-colorfield>=0.14.0",
     "django-daisy>=1.0.26",
     "django-import-export>=4.0.7",

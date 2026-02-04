@@ -233,6 +233,20 @@ wheels = [
 ]
 
 [[package]]
+name = "django-ckeditor-5"
+version = "0.2.19"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "pillow", version = "11.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "pillow", version = "12.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/48/ea0cd442deea58815704ac2287bdd9d2b6172d4a4189e937c7c280824394/django_ckeditor_5-0.2.19.tar.gz", hash = "sha256:627e0752d15c915665444b34b4d376855187a93660bdc9193d6b10c856ef843b", size = 3024635, upload-time = "2026-01-03T18:14:17.638Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d5/ee/7e5463c690813f8f25bf9dd17f69c3dd3630a014b057cffd98b16b01f152/django_ckeditor_5-0.2.19-py3-none-any.whl", hash = "sha256:7644e1b147444ee69e3abbfdbd9fb827ad307780abb26055d9ca3dca4e46f668", size = 3119378, upload-time = "2026-01-03T18:14:15.142Z" },
+]
+
+[[package]]
 name = "django-colorfield"
 version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
@@ -747,6 +761,7 @@ dependencies = [
     { name = "django" },
     { name = "django-admin-interface" },
     { name = "django-ckeditor" },
+    { name = "django-ckeditor-5" },
     { name = "django-colorfield" },
     { name = "django-daisy" },
     { name = "django-import-export" },
@@ -819,6 +834,7 @@ requires-dist = [
     { name = "django", specifier = ">=4.2,<5" },
     { name = "django-admin-interface", specifier = ">=0.30.1" },
     { name = "django-ckeditor", specifier = ">=6.6.1" },
+    { name = "django-ckeditor-5", specifier = ">=0.2.19" },
     { name = "django-colorfield", specifier = ">=0.14.0" },
     { name = "django-daisy", specifier = ">=1.0.26" },
     { name = "django-import-export", specifier = ">=4.0.7" },
