@@ -19,14 +19,7 @@
 {% block content %}
 <div id="content-main">
     <div class="module">
-        <h2>项目甘特图</h2>
-
-        <!-- 过滤器 -->
-        <div class="gantt-filters">
-            <label><input type="checkbox" id="show-completed" checked> 显示已完成项目</label>
-            <label><input type="checkbox" id="show-only-mine"> 仅显示我的项目</label>
-            <button id="refresh-btn" class="button">刷新</button>
-        </div>
+        <h2>项目甘特图 <a href="{% url 'admin:projects_projectmodel_changelist' %}?{{ request.GET.urlencode }}" class="button" style="font-size: 12px; margin-left: 10px;">返回项目列表</a></h2>
 
         <!-- 时间刻度切换 -->
         <div class="gantt-scale-controls">
@@ -107,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         {% endfor %}
     ];
 
-    let currentData = rawData;
+    // 直接使用 rawData，不再前端过滤
+    const currentData = rawData;
 
     // 定义不同刻度配置
     const scaleConfigs = {
@@ -328,11 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
         gantt.parse(tasks);
     }
 
-    // 过滤功能
-    document.getElementById('show-completed').addEventListener('change', filterData);
-    document.getElementById('show-only-mine').addEventListener('change', filterData);
-    document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
-
     // 刻度切换按钮事件
     document.querySelectorAll('.scale-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -341,20 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
             changeScale(this.dataset.scale);
         });
     });
-
-    function filterData() {
-        const showCompleted = document.getElementById('show-completed').checked;
-        const showOnlyMine = document.getElementById('show-only-mine').checked;
-        const currentUser = '{{ request.user.username }}';
-
-        currentData = rawData.filter(p => {
-            if (!showCompleted && p.status) return false;
-            if (showOnlyMine && p.user !== currentUser) return false;
-            return true;
-        });
-
-        loadGantt();
-    }
 
     // 初始加载
     loadGantt();

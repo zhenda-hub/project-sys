@@ -41,8 +41,8 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
         return custom_urls + urls
 
     def gantt_view(self, request):
-        """甘特图页面视图 - 复用 DefaultMixin 权限逻辑"""
-        # 权限过滤：超级用户看全部，普通用户看自己的+公开的
+        """甘特图页面视图 - 支持列表页过滤器参数"""
+        # 获取基础 queryset（权限过滤）
         if request.user.is_superuser:
             projects = ProjectModel.objects.all()
         else:
@@ -50,7 +50,19 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
                 Q(user=request.user) | Q(public=True)
             )
 
-        # 按结束时间排序，结束日期越晚的排在最上面
+        # 应用列表页过滤器参数
+        filters = {}
+        if 'status' in request.GET:
+            filters['status'] = request.GET['status']
+        if 'user__id__exact' in request.GET:
+            filters['user_id'] = request.GET['user__id__exact']
+        if 'priority' in request.GET:
+            filters['priority'] = request.GET['priority']
+
+        if filters:
+            projects = projects.filter(**filters)
+
+        # 按结束时间排序
         projects = sorted(projects, key=lambda p: p.end_date, reverse=True)
 
         context = {
