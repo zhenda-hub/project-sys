@@ -51,16 +51,8 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
             )
 
         # 应用列表页过滤器参数
-        filters = {}
-        if 'status' in request.GET:
-            filters['status'] = request.GET['status']
-        if 'user__id__exact' in request.GET:
-            filters['user_id'] = request.GET['user__id__exact']
-        if 'priority' in request.GET:
-            filters['priority'] = request.GET['priority']
-
-        if filters:
-            projects = projects.filter(**filters)
+        if request.GET:
+            projects = projects.filter(**request.GET.dict())
 
         # 按结束时间排序
         projects = sorted(projects, key=lambda p: p.end_date, reverse=True)
