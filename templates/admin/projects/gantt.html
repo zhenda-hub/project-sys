@@ -21,24 +21,32 @@
     <div class="module">
         <h2>项目甘特图</h2>
 
-        <!-- 时间刻度切换 -->
-        <div class="gantt-scale-controls">
-            <button class="scale-btn" data-scale="year">年</button>
-            <button class="scale-btn active" data-scale="month">月</button>
-            <button class="scale-btn" data-scale="week">周</button>
+        <!-- 时间刻度切换 + 图例（横向排列） -->
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 10px;">
+            <div class="gantt-scale-controls">
+                <button class="scale-btn" data-scale="year">年</button>
+                <button class="scale-btn active" data-scale="month">月</button>
+                <button class="scale-btn" data-scale="week">周</button>
+            </div>
+            <div class="gantt-legend" style="margin: 0;">
+                <span style="margin-right: 15px;">优先级：</span>
+                <span class="legend-item" style="display: inline-flex; align-items: center; margin-right: 10px;">
+                    <span class="legend-color priority-critical"></span><span>重要紧急</span>
+                </span>
+                <span class="legend-item" style="display: inline-flex; align-items: center; margin-right: 10px;">
+                    <span class="legend-color priority-high"></span><span>重要不紧急</span>
+                </span>
+                <span class="legend-item" style="display: inline-flex; align-items: center; margin-right: 10px;">
+                    <span class="legend-color priority-medium"></span><span>不重要紧急</span>
+                </span>
+                <span class="legend-item" style="display: inline-flex; align-items: center;">
+                    <span class="legend-color priority-low"></span><span>不重要不紧急</span>
+                </span>
+            </div>
         </div>
 
         <!-- 甘特图容器 -->
-        <div id="gantt_here" style="width:100%; height:500px;"></div>
-
-        <!-- 图例 -->
-        <div class="gantt-legend">
-            <h4>优先级图例</h4>
-            <div class="legend-item"><span class="legend-color priority-critical"></span><span>重要紧急</span></div>
-            <div class="legend-item"><span class="legend-color priority-high"></span><span>重要不紧急</span></div>
-            <div class="legend-item"><span class="legend-color priority-medium"></span><span>不重要紧急</span></div>
-            <div class="legend-item"><span class="legend-color priority-low"></span><span>不重要不紧急</span></div>
-        </div>
+        <div id="gantt_here" style="width:100%; height:800px;"></div>
     </div>
 </div>
 {% endblock %}
