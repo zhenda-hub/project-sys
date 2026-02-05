@@ -42,6 +42,9 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
 
     def gantt_view(self, request):
         """甘特图页面视图 - 支持列表页过滤器参数"""
+        # Django admin 内部参数（不应传递给 filter）
+        ADMIN_INTERNAL_PARAMS = ('all', 'o', 'p', 'q', '_popup', '_to_field')
+
         # 获取基础 queryset（权限过滤）
         if request.user.is_superuser:
             projects = ProjectModel.objects.all()
@@ -50,11 +53,15 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
                 Q(user=request.user) | Q(public=True)
             )
 
-        # 应用列表页过滤器参数
-        if request.GET:
-            projects = projects.filter(**request.GET.dict())
+        # 应用列表页过滤器参数（排除 admin 内部参数）
+        filter_params = {
+            k: v for k, v in request.GET.items()
+            if k not in ADMIN_INTERNAL_PARAMS
+        }
+        if filter_params:
+            projects = projects.filter(**filter_params)
 
-        # 按结束时间排序
+        # 按结束时间排序（甘特图原有逻辑）
         projects = sorted(projects, key=lambda p: p.end_date, reverse=True)
 
         context = {
