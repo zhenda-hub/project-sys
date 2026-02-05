@@ -208,16 +208,25 @@ document.addEventListener('DOMContentLoaded', function() {
     gantt.config.show_links = false;
     gantt.config.details_on_create = false;
     gantt.config.details_on_dblclick = false;
-    gantt.config.order_branch = true;
-    gantt.config.order_branch_free = true;
+    gantt.config.order_branch = false;
+    gantt.config.order_branch_free = false;
     gantt.config.open_tree_initially = true;
+
+    // 禁用所有拖动功能（只读模式）
+    gantt.config.drag_task = false;         // 禁止拖动任务条
+    gantt.config.drag_progress = false;     // 禁止拖动进度
+    gantt.config.drag_resize = false;       // 禁止拖动调整大小
+    gantt.config.drag_links = false;        // 禁止拖动连线
+    gantt.config.drag_move = false;         // 禁止拖动移动
+    gantt.config.drag_grid = false;         // 禁止网格拖动
+    gantt.config.drag_critical = false;     // 禁止关键路径拖动
 
     // 设置时间刻度 - 默认月视图
     gantt.config.scales = scaleConfigs.month;
 
     // 配置列
     gantt.config.columns = [
-        { name: "text", label: "项目名称", width: 250, resize: true, tree: true }
+        { name: "text", label: "项目名称", width: 250, resize: false, tree: true }
     ];
 
     // 配置今天标记（使用标准版方式 - 简化版）
