@@ -322,6 +322,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化甘特图
     gantt.init("gantt_here");
 
+    // 点击任务显示详情（支持移动端）
+    gantt.attachEvent("onTaskClick", function(id, e) {
+        const project = rawData.find(p => p.id === id);
+        if (!project) return true;
+
+        const content = `
+            <div style="padding: 10px; line-height: 1.8;">
+                <h3 style="margin-top: 0;">${project.name}</h3>
+                <p><strong>项目描述:</strong></p>
+                <p style="white-space: pre-wrap;">${project.what || '无'}</p>
+                <p><strong>负责人:</strong> ${project.user}</p>
+                <p><strong>优先级:</strong> ${getPriorityLabel(project.priority)}</p>
+                <p><strong>进度:</strong> ${Math.round(project.progress * 100)}%</p>
+                <p><strong>时间:</strong> ${formatDate(project.start_date)} ~ ${formatDate(project.end_date)}</p>
+                <p><strong>状态:</strong> ${project.status ? '已完成' : '进行中'}</p>
+            </div>
+        `;
+
+        gantt.modalbox({
+            title: "项目详情",
+            text: content,
+            buttons: ["关闭"],
+            width: 400
+        });
+
+        return true;  // 阻止默认行为
+    });
+
     // 应用当前主题
     applyGanttTheme();
 

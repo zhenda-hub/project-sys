@@ -159,6 +159,20 @@
         flex-direction: column;
         align-items: flex-start;
     }
+
+    /* 移动端消息框优化 */
+    .gantt_message {
+        max-width: 80vw !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        font-size: 14px !important;
+    }
+
+    .gantt_message_content {
+        max-width: 75vw;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
 }
 
 /* ===== 暗色主题适配 ===== */

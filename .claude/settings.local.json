@@ -29,7 +29,9 @@
       "Bash(git pull:*)",
       "Bash(git stash:*)",
       "Bash(git worktree:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs"
     ]
   }
 }
