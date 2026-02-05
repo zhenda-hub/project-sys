@@ -283,9 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return priorityMap[task.priority] || '';
     };
 
-    // 自定义任务条文本
+    // 自定义任务条文本 - 显示项目描述
     gantt.templates.task_text = function(start, end, task) {
-        return task.text;
+        return task.what || task.text;
     };
 
     // 自定义工具提示
