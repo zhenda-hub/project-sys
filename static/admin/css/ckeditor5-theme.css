@@ -17,6 +17,12 @@ html[data-theme="dark"] .ck-editor {
     --ck-color-input-border: #3a3a3a;
 }
 
+/* Editable content text color in manual dark mode */
+html[data-theme="dark"] .ck-editor__editable,
+html[data-theme="dark"] .ck-content {
+    color: #e0e0e0 !important;
+}
+
 /* 当 Admin 是 light 主题时（使用默认值，可省略） */
 html[data-theme="light"] .ck-editor {
     /* CKEditor 5 默认就是 light 主题，无需额外配置 */
@@ -38,5 +44,11 @@ html[data-theme="light"] .ck-editor {
         --ck-color-panel-background: #2d2d2d;
         --ck-color-input-background: #2d2d2d;
         --ck-color-input-border: #3a3a3a;
+    }
+
+    /* Editable content text color in auto dark mode */
+    html[data-theme="auto"] .ck-editor__editable,
+    html[data-theme="auto"] .ck-content {
+        color: #e0e0e0 !important;
     }
 }
