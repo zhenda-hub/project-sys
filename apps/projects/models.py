@@ -4,6 +4,7 @@ from django.utils.timezone import now
 
 from tinymce.models import HTMLField
 from django_ckeditor_5.fields import CKEditor5Field as RichTextUploadingField
+from ckeditor_uploader.fields import RichTextUploadingField as CKEditor4Field
 from markdownx.models import MarkdownxField
 from mdeditor.fields import MDTextField
 
@@ -50,6 +51,7 @@ class ProjectModel(BaseModel):
     attachments = models.FileField(verbose_name='附件', upload_to='attachments/%Y/%m/%d/', null=True, blank=True)
     status = models.BooleanField(verbose_name='是否完成', default=False)
     think = models.TextField(verbose_name='项目感想', null=True, blank=True)
+    # ck4_test = CKEditor4Field('CKEditor4测试', blank=True, null=True)  # CKEditor 4 测试字段（暂时注释）
 
     class Meta:
         db_table = 'web_projectmodel'

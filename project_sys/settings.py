@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize', # 人性化显示
 
     'django_ckeditor_5',
+    'ckeditor',           # CKEditor 4 基础包
+    'ckeditor_uploader',  # CKEditor 4 带图片上传
     'tinymce',
 
     'markdownx',
@@ -298,6 +300,30 @@ CKEDITOR_5_CONFIGS = {
 }
 
 CKEDITOR_5_FILE_UPLOAD_UPLOAD = 'uploads/'
+
+# CKEditor 4 配置 (用于测试对比)
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'toolbar': [
+            {'name': 'document', 'items': ['Source', '-', 'Preview', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            '/',
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'BlockQuote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule', 'SpecialChar']},
+            {'name': 'styles', 'items': ['Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+        ],
+        'toolbarLocation': 'top',
+        'height': 300,
+        'tabSpaces': 4,
+    }
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 VDITOR_CONFIGS = {  # remember to write "' '"
     'default': {

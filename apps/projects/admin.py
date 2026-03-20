@@ -29,6 +29,9 @@ class ProjectModelAdmin(DefaultMixin, ImportExportModelAdmin):
             'fields': ('why', 'priority', 'public',
                        'start_date', 'end_date', 'how', 'attachments', 'think')
         }),
+        # ('CKEditor4 测试', {
+        #     'fields': ('ck4_test',)
+        # }),
     )
 
     def get_urls(self):
