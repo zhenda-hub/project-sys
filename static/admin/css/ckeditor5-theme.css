@@ -23,6 +23,56 @@
     margin: 1.333em 0 0.333em 0 !important;
 }
 
+.module .ck-content h5 {
+    margin: 1.2em 0 0.3em 0 !important;
+}
+
+.module .ck-content h6 {
+    margin: 1em 0 0.2em 0 !important;
+}
+
+/* === 标题颜色区分（避开红绿色，黑白背景通用） === */
+.module .ck-content h2 {
+    color: #0057d9 !important;  /* 深蓝 */
+}
+
+.module .ck-content h3 {
+    color: #6b21a8 !important;  /* 深紫 */
+}
+
+.module .ck-content h4 {
+    color: #b45309 !important;  /* 深琥珀 */
+}
+
+.module .ck-content h5 {
+    color: #0e7490 !important;  /* 深青 */
+}
+
+.module .ck-content h6 {
+    color: #9d174d !important;  /* 深粉 */
+}
+
+/* === Dark 主题标题颜色 === */
+html[data-theme="dark"] .module .ck-content h2 {
+    color: #4da3ff !important;  /* 亮蓝 */
+}
+
+html[data-theme="dark"] .module .ck-content h3 {
+    color: #c084fc !important;  /* 亮紫 */
+}
+
+html[data-theme="dark"] .module .ck-content h4 {
+    color: #fbbf24 !important;  /* 亮琥珀 */
+}
+
+html[data-theme="dark"] .module .ck-content h5 {
+    color: #22d3ee !important;  /* 亮青 */
+}
+
+html[data-theme="dark"] .module .ck-content h6 {
+    color: #f472b6 !important;  /* 亮粉 */
+}
+
 /* === Dark 主题 === */
 html[data-theme="dark"] .ck-editor {
     --ck-color-base-background: #1e1e1e;
@@ -47,6 +97,27 @@ html[data-theme="dark"] .ck-content {
 
 /* === Auto 主题（跟随系统） === */
 @media (prefers-color-scheme: dark) {
+    /* Auto 主题标题颜色 */
+    html[data-theme="auto"] .module .ck-content h2 {
+        color: #4da3ff !important;
+    }
+
+    html[data-theme="auto"] .module .ck-content h3 {
+        color: #c084fc !important;
+    }
+
+    html[data-theme="auto"] .module .ck-content h4 {
+        color: #fbbf24 !important;
+    }
+
+    html[data-theme="auto"] .module .ck-content h5 {
+        color: #22d3ee !important;
+    }
+
+    html[data-theme="auto"] .module .ck-content h6 {
+        color: #f472b6 !important;
+    }
+
     html[data-theme="auto"] .ck-editor {
         --ck-color-base-background: #1e1e1e;
         --ck-color-base-border: #3a3a3a;
