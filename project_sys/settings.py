@@ -248,19 +248,52 @@ MDEDITOR_CONFIGS = {
 # CKEditor 5 配置
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': [
-            'heading', '|',
-            'bold', 'italic', 'link', '|',
-            'bulletedList', 'numberedList', '|',
-            'imageUpload', 'blockQuote', 'insertTable', '|',
-            'undo', 'redo'
-        ],
+        'toolbar': {
+            'items': [
+                'heading', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'subscript', 'superscript', 'highlight', 'removeFormat', '|',
+                'link', 'imageUpload', 'mediaEmbed', 'insertTable', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', 'alignment', '|',
+                'blockQuote', 'codeBlock', 'sourceEditing', '|',
+                'findAndReplace', 'selectAll', '|',
+                'undo', 'redo'
+            ],
+            'shouldNotGroupWhenFull': True
+        },
         'language': 'zh-cn',
         'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side', '|'],
+            'styles': ['full', 'side', 'alignLeft', 'alignRight', 'alignCenter'],
             'upload': {
                 'types': ['jpeg', 'png', 'gif', 'bmp', 'webp'],
             }
         },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
+                              'tableProperties', 'tableCellProperties']
+        },
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'},
+                {'model': 'heading4', 'view': 'h4', 'title': 'Heading 4', 'class': 'ck-heading_heading4'},
+                {'model': 'heading5', 'view': 'h5', 'title': 'Heading 5', 'class': 'ck-heading_heading5'},
+                {'model': 'heading6', 'view': 'h6', 'title': 'Heading 6', 'class': 'ck-heading_heading6'}
+            ]
+        },
+        'list': {
+            'properties': {
+                'styles': True,
+                'startIndex': True,
+                'reversed': True
+            }
+        }
     },
 }
 
