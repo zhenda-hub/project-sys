@@ -10,6 +10,24 @@ This is a Django-based project management system (项目管理系统) built prim
 
 ## Development Commands
 
+### Package Management (IMPORTANT: Use `uv`)
+
+**This project uses `uv` for dependency management. Always use `uv` instead of `pip`.**
+
+```bash
+# Install dependencies
+uv pip install <package-name>
+
+# Install from requirements.txt
+uv pip install -r requirements.txt
+
+# Create virtual environment with uv
+uv venv
+
+# Run commands with uv
+uv run python manage.py runserver
+```
+
 ### Running the Application
 
 ```bash
