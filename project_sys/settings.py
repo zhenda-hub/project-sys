@@ -178,7 +178,7 @@ WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'zip
 # WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'admin/js/', 'ckeditor/', 'tinymce/']
 WHITENOISE_SKIP_PATHS = ['dist/js/mathjax/', 'ckeditor/', 'tinymce/'] # TODO： check
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 WEB_TITLE = '项目管理系统'
@@ -225,7 +225,7 @@ MDEDITOR_CONFIGS = {
             "help", "info",
             "||", "preview", "watch", "fullscreen"
         ],  # custom edit box toolbar
-        # 'upload_image_url': '/media/',
+        'upload_image_url': '/mdeditor/uploads/',  # 图片上传 URL
         # image upload format type
         'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         'image_folder': 'editor',  # image save the folder name
@@ -425,6 +425,9 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGIN_URL = '/admin/login/'  # For PasswordResetCompleteView
+
+# 允许同源 iframe（MDEditor 图片上传需要）
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 try:
