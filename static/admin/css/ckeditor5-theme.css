@@ -7,7 +7,20 @@
 .module .ck-content h3,
 .module .ck-content h4 {
     padding: 0 !important;
-    margin-top: 0 !important;
+}
+
+/* === 修复 base.css 导致的标题 margin 问题 === */
+/* 恢复 CKEditor 5 默认标题样式，覆盖 base.css:155,165,172,178,580,584 */
+.module .ck-content h2 {
+    margin: 1.286em 0 0.429em 0 !important;
+}
+
+.module .ck-content h3 {
+    margin: 1em 0 0.556em 0 !important;
+}
+
+.module .ck-content h4 {
+    margin: 1.333em 0 0.333em 0 !important;
 }
 
 /* === Dark 主题 === */

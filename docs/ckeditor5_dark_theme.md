@@ -114,3 +114,46 @@ html[data-theme="dark"] .module .ck-content h4 {
     /* ... */
 }
 ```
+
+---
+
+## 附录：CKEditor 4 vs CKEditor 5 架构对比
+
+### 渲染方式差异
+
+| 特性 | CKEditor 4 | CKEditor 5 |
+|------|------------|------------|
+| 渲染方式 | **iframe** | **div** (contentEditable) |
+| 样式隔离 | ✅ 自动隔离 | ❌ 共享页面 CSS |
+| 主题切换 | ❌ 需销毁重建编辑器 | ✅ CSS 变量实时生效 |
+| 维护状态 | ⚠️ 停止维护（有安全警告） | ✅ 活跃维护 |
+
+### 为什么 CKEditor 5 不用 iframe
+
+CKEditor 5 放弃 iframe，采用 **虚拟 DOM + contentEditable** 架构：
+
+1. **自建虚拟 DOM 引擎** - MVC 架构（Model → View → DOM）
+2. **解决 contentEditable 浏览器差异** - 用虚拟层抽象
+3. **更轻量、更灵活、扩展性更强**
+
+**代价：** 需要手动处理外部 CSS 干扰（如本文档解决的问题）
+
+### CKEditor 4 不适合动态主题切换
+
+CKEditor 4 虽然支持 Moono Dark 暗色皮肤，但**无法运行时动态切换**：
+
+> "The only way to change skin is from the config... you need to **destroy and recreate** the editor"
+
+动态切换会导致：
+- ❌ 编辑器内容可能丢失
+- ❌ 光标位置丢失
+- ❌ 用户体验差
+
+因此，**需要跟随 Django Admin 主题动态切换的场景，推荐使用 CKEditor 5**。
+
+### 参考
+
+- [Introduction to CKEditor 5 architecture](https://ckeditor.com/docs/ckeditor5/latest/framework/architecture/intro.html)
+- [Editing engine | CKEditor 5 Framework Documentation](https://ckeditor.com/docs/ckeditor5/latest/framework/architecture/editing-engine.html)
+- [Dynamic update of CKEditor skin - Stack Overflow](https://stackoverflow.com/questions/33799993/dynamic-update-of-ckeditor-skin)
+- [Moono Dark Skin - CKEditor Add-ons](https://ckeditor.com/cke4/addon/moono-dark)
