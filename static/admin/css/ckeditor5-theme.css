@@ -1,6 +1,16 @@
 /* CKEditor 5 跟随 Django Admin 主题 */
 
-/* 当 Admin 是 dark 主题时 */
+/* === 修复 base.css 导致的标题 padding 问题（与 theme 无关） === */
+/* base.css:567 - .module h3/h4 { padding-left: 10px; padding-right: 10px; } */
+/* base.css:584 - .module h2 { padding: 8px; } */
+.module .ck-content h2,
+.module .ck-content h3,
+.module .ck-content h4 {
+    padding: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* === Dark 主题 === */
 html[data-theme="dark"] .ck-editor {
     --ck-color-base-background: #1e1e1e;
     --ck-color-base-border: #3a3a3a;
@@ -17,18 +27,12 @@ html[data-theme="dark"] .ck-editor {
     --ck-color-input-border: #3a3a3a;
 }
 
-/* Editable content text color in manual dark mode */
 html[data-theme="dark"] .ck-editor__editable,
 html[data-theme="dark"] .ck-content {
     color: #e0e0e0 !important;
 }
 
-/* 当 Admin 是 light 主题时（使用默认值，可省略） */
-html[data-theme="light"] .ck-editor {
-    /* CKEditor 5 默认就是 light 主题，无需额外配置 */
-}
-
-/* Auto 模式 - 跟随系统 */
+/* === Auto 主题（跟随系统） === */
 @media (prefers-color-scheme: dark) {
     html[data-theme="auto"] .ck-editor {
         --ck-color-base-background: #1e1e1e;
@@ -46,7 +50,6 @@ html[data-theme="light"] .ck-editor {
         --ck-color-input-border: #3a3a3a;
     }
 
-    /* Editable content text color in auto dark mode */
     html[data-theme="auto"] .ck-editor__editable,
     html[data-theme="auto"] .ck-content {
         color: #e0e0e0 !important;
